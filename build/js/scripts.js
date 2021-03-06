@@ -1,5 +1,5 @@
 //   all ------------------
-function initTowhub() {
+function initApp() {
     "use strict";
     //   loader ------------------
     $(".loader-wrap").fadeOut(300, function () {
@@ -1210,7 +1210,6 @@ function initparallax() {
     if (trueMobile) $(".bgvid , .background-vimeo , .background-youtube-wrapper ").remove();
 }
 // duplicate -----------------
-
 $.fn.duplicate = function (a, b) {
     var c = [];
     for (var d = 0; d < a; d++) $.merge(c, this.clone(b).get());
@@ -1258,7 +1257,6 @@ function initAutocomplete() {
         autocomplete.inputId = acInputs[i].id;
     }
 }
-initAutocomplete()
 //  listing height -----------------
 $(".dasboard-menu-btn").on("click", function () {
     $(".dasboard-menu-wrap").slideToggle(500);
@@ -1295,6 +1293,6 @@ $(".romms-select_header").on("click", function () {
 
 //   Init All ------------------
 $(document).ready(function () {
-    initTowhub();
+    initApp();
     initparallax();
 });

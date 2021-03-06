@@ -9,8 +9,9 @@ class NotFound extends Component {
 
     componentDidMount() {
 
-        appendScript("/js/jquery.min.js");
+        appendScript("https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js");
         appendScript("/js/plugins.js");
+        appendScript("/js/jquery.matchHeight.js");
         appendScript("/js/scripts.js");
     }
 

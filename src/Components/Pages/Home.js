@@ -11,10 +11,11 @@ class Home extends Component {
 
     componentDidMount() {
 
-        appendScript("/js/jquery.min.js");
+        appendScript("https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js");
         appendScript("/js/plugins.js");
-        appendScript("/js/scripts.js");
+        appendScript("/js/jquery.matchHeight.js");
         appendScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDagkUmxY8WQ5Th7zIf12QkqctyvDf6P8k&libraries=places&callback=initAutocomplete");
+        appendScript("/js/scripts.js");
         appendScript("/js/map-single.js");
     }
 
