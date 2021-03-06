@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { AuthProvider } from "./Contexts/AuthContext"
+
+// Private route
+import PrivateRoute from './PrivateRoute'
+
+// Preloader
+import Preloader from './Components/Layouts/Preloader';
+
+// Not Found
+import NotFound from './Components/Layouts/NotFound';
+
+// Pages
+import Home from './Components/Pages/Home';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <Preloader />
+            <AuthProvider>
+                <Switch>
+                    <Route exact path="/" component={Home} />
+                    <Route component={NotFound} />
+                </Switch>
+            </AuthProvider>
+        </Router>
+    );
 }
 
 export default App;
