@@ -687,7 +687,7 @@ function singleMap() {
 	
 }
 
- 
+singleMap();
 	
 var head = document.getElementsByTagName( 'head' )[0];
 
