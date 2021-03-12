@@ -8,6 +8,7 @@ import './Assets/css/reset.css';
 import './Assets/css/plugins.css';
 import './Assets/css/style.css';
 import './Assets/css/color.css';
+import './Assets/css/dashboard-style.css';
 
 ReactDOM.render(
   <React.StrictMode>
