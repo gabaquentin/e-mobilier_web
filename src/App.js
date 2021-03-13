@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { AuthProvider } from "./Contexts/AuthContext"
+import { AuthProvider } from "./Contexts/AuthContext";
+import { UserProvider } from "./Contexts/User/userContext";
 
 // Private route
 import PrivateRoute from './PrivateRoute'
@@ -13,16 +14,20 @@ import NotFound from './Components/Layouts/NotFound';
 
 // Pages
 import Home from './Components/Pages/Home';
+import User from './Components/Pages/User';
 
 function App() {
     return (
         <Router>
             <Preloader />
             <AuthProvider>
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route component={NotFound} />
-                </Switch>
+                <UserProvider>
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <PrivateRoute exact path="/user" component={User} />
+                        <Route component={NotFound} />
+                    </Switch>
+                </UserProvider>
             </AuthProvider>
         </Router>
     );
