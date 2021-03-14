@@ -7,17 +7,6 @@ import all1 from '../../../Assets/images/all/1.jpg';
 
 const Review = () => {
 
-    useEffect(() => {
-        const appendScripts = () => {
-
-            appendScript("/js/jquery.min.js", false);
-            appendScript("/js/plugins.js", false);
-            appendScript("/js/scripts.js", false);
-
-        }
-        appendScripts();
-    }, []);
-
     return (
         <div className="col-md-9">
             <div className="dashboard-title   fl-wrap">

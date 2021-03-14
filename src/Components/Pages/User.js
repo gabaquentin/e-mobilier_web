@@ -1,12 +1,16 @@
 import React, { useEffect, Fragment, useContext, useState } from 'react';
-import app from '../../firebase'
+import app from '../../firebase';
 import MetaTags from 'react-meta-tags';
 import Header from '../Layouts/Header';
 import Footer from '../Layouts/Footer';
 import AuthForm from '../Layouts/AuthForm';
 import Content from '../Sections/User/Content';
 import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import { NotificationManager } from 'react-notifications';
 import { UserContext } from "../../Contexts/User/userContext";
+
+import { appendScript } from '../../Assets/utils/appendScript';
 
 import $ from "jquery";
 
@@ -14,23 +18,25 @@ const User = () => {
 
     const [state, dispatch] = useContext(UserContext);
     const [user, setUser] = useState('');
-
     useEffect(() => {
         const fetchUser = async () => {
-            const db = app.firestore()
-            const userRef = db.collection('Users');
-            const snapshot = await userRef.where('Email', '==', state.user.email).get();
-            if (snapshot.empty) {
-                console.log('No matching documents.');
-                return;
-            }
+            if (state.user.email) {
+                const db = app.firestore()
+                const userRef = db.collection('Users');
+                const snapshot = await userRef.where('Email', '==', state.user.email).get();
+                if (snapshot.empty) {
+                    NotificationManager.error('Verify your connection');
+                    return;
+                }
 
-            snapshot.forEach(doc => {
-                setUser(doc.data())
-            });
+                snapshot.forEach(doc => {
+                    setUser(doc.data())
+                });
+            }
         }
         fetchUser()
-    }, [])
+    })
+
     useEffect(() => {
         const headerScripts = () => {
             $(".more-filter-option").on("click", function () {
@@ -99,11 +105,11 @@ const User = () => {
                 />
             </MetaTags>
             <div id="main">
-                <Header state={state} dispatch={dispatch} />
+                <Header user={user} state={state} dispatch={dispatch} />
                 <NotificationContainer />
                 <div id="wrapper">
                     <div className="content">
-                        <Content user={user} state={state} dispatch={dispatch}/>
+                        <Content user={user} state={state} dispatch={dispatch} />
                     </div>
                 </div>
                 <Footer />

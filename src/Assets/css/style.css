@@ -6,6 +6,27 @@
   Last change: 25/12/2020 ]
 /*-------------Fonts---------------------------------------*/
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700,800,900|Roboto:400,500,700,900&display=swap');
+
+/* width */
+::-webkit-scrollbar {
+	width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: #3D528B;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: #2F3F6E;
+}
+
 /*-------------General Style---------------------------------------*/
 html{
 	overflow-x:hidden !important;
@@ -9381,6 +9402,14 @@ section.parallax-section {
 }
 }
 @media only screen and  (max-width: 460px) {
+.display-name {
+	visibility: hidden;
+    clear: both;
+    float: left;
+    margin: 10px auto 5px 20px;
+    width: 28%;
+    display: none;
+}
 .main-search-input-tabs .tabs-menu li a {
     padding: 12px 10px;
 }

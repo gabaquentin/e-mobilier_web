@@ -8,17 +8,6 @@ import bg1 from '../../../Assets/images/bg/1.jpg';
 
 const Feed = () => {
 
-    useEffect(() => {
-        const appendScripts = () => {
-
-            appendScript("/js/jquery.min.js", false);
-            appendScript("/js/plugins.js", false);
-            appendScript("/js/scripts.js", false);
-
-        }
-        appendScripts();
-    }, []);
-
     return (
         <div className="col-md-9">
             <div className="row">

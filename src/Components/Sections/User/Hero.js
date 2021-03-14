@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
 import avatar1 from '../../../Assets/images/avatar/1.jpg';
+import avatar7 from '../../../Assets/images/avatar/7.png';
 
 const Hero = (props) => {
-
-
     return (
         <section className="parallax-section dashboard-header-sec gradient-bg" data-scrollax-parent="true">
             <div className="container">
@@ -17,7 +16,7 @@ const Hero = (props) => {
                 </div>
                 {/*Tariff Plan menu end*/}
                         <div className="dashboard-header_conatiner fl-wrap dashboard-header_title">
-                    <h1>Welcome  : <span>{props.state.user.displayName ? props.state.user.displayName : ''}</span></h1>
+                    <h1>Welcome  : <span>{props.user.displayName ? props.user.displayName : ''}</span></h1>
                 </div>
             </div>
             <div className="clearfix"></div>
@@ -25,7 +24,7 @@ const Hero = (props) => {
                 <div className="container">
                     <div className="dashboard-header_conatiner fl-wrap">
                         <div className="dashboard-header-avatar">
-                            <img src={props.state.user.photoUrl ? props.state.user.photoUrl : avatar1} alt="" />
+                            <img src={props.user.photoUrl ? props.user.photoUrl : avatar7} alt="" />
                                 <a href="dashboard-myprofile.html" className="color-bg edit-prof_btn"><i className="fal fa-edit"></i></a>
                                 </div>
                             <div className="dashboard-header-stats-wrap">

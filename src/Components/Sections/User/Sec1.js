@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import 'react-notifications/lib/notifications.css';
+import { NotificationManager } from 'react-notifications';
 
 import Dashboard from './Dashboard';
 import Feed from './Feed';
@@ -36,9 +38,9 @@ const Sec1 = (props) => {
                             <h3>Main</h3>
                             <ul className="no-list-style">
                                 <li><a href="#dashboard" className={dashboard ? 'user-profile-act' : ''} onClick={() => { setDashboard(true); setFeed(false); setProfile(false); setChat(false); setPassword(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)   } }><i className="fal fa-chart-line"></i>Dashboard</a></li>
-                                <li><a href="#feeds" className={feed ? 'user-profile-act' : ''} onClick={() => { setFeed(true); setDashboard(false); setProfile(false); setChat(false); setPassword(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)  } }><i className="fal fa-rss"></i>Your Feed <span>7</span></a></li>
+                                <li><a href="#feeds" className={feed ? 'user-profile-act' : ''} onClick={() => { setFeed(true); setDashboard(false); setProfile(false); setChat(false); setPassword(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)  } }><i className="fal fa-rss"></i>Your Feed <span style={{ backgroundColor: '#5ECEB1' }}>7</span></a></li>
                                 <li><a href="#edit-profile" className={profile ? 'user-profile-act' : ''} onClick={() => { setProfile(true); setDashboard(false); setFeed(false); setChat(false); setPassword(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)  } }><i className="fal fa-user-edit"></i> Edit profile</a></li>
-                                <li><a href="#chat" className={chat ? 'user-profile-act' : ''} onClick={() => { setChat(true); setDashboard(false); setFeed(false); setProfile(false); setPassword(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)  } }><i className="fal fa-envelope"></i> Messages <span>3</span></a></li>
+                                <li><a href="#chat" className={chat ? 'user-profile-act' : ''} onClick={() => { setChat(true); setDashboard(false); setFeed(false); setProfile(false); setPassword(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)  } }><i className="fal fa-envelope"></i> Messages <span style={{ backgroundColor: '#5ECEB1' }}>3</span></a></li>
                                 <li><a href="#change-password" className={password ? 'user-profile-act' : ''} onClick={() => { setPassword(true); setDashboard(false); setFeed(false); setProfile(false); setChat(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)  } }><i className="fal fa-key"></i>Change Password</a></li>
                                 <li>
                                     <a href="#" className="submenu-link"><i className="fal fa-plus"></i>Submenu</a>
@@ -58,7 +60,7 @@ const Sec1 = (props) => {
                             <h3>Listings</h3>
                             <ul className="no-list-style">
                                 <li><a href="#listings" className={listing ? 'user-profile-act' : ''} onClick={() => { setListing(true); setDashboard(false); setFeed(false); setProfile(false); setChat(false); setPassword(false); setBooking(false); setReview(false); setAdd_listing(false)  } }><i className="fal fa-th-list"></i> My listings  </a></li>
-                                <li><a href="#bookings" className={booking ? 'user-profile-act' : ''} onClick={() => { setBooking(true); setDashboard(false); setFeed(false); setProfile(false); setChat(false); setPassword(false); setListing(false); setReview(false); setAdd_listing(false)  } }> <i className="fal fa-calendar-check"></i> Bookings <span>2</span></a></li>
+                                <li><a href="#bookings" className={booking ? 'user-profile-act' : ''} onClick={() => { setBooking(true); setDashboard(false); setFeed(false); setProfile(false); setChat(false); setPassword(false); setListing(false); setReview(false); setAdd_listing(false)  } }> <i className="fal fa-calendar-check"></i> Bookings <span style={{ backgroundColor: '#5ECEB1' }}>2</span></a></li>
                                 <li><a href="#reviews" className={review ? 'user-profile-act' : ''} onClick={() => { setReview(true); setDashboard(false); setFeed(false); setProfile(false); setChat(false); setPassword(false); setListing(false); setBooking(false); setAdd_listing(false)  } }><i className="fal fa-comments-alt"></i> Reviews </a></li>
                                 <li><a href="#add-listing" className={add_listing ? 'user-profile-act' : ''} onClick={() => { setAdd_listing(true); setDashboard(false); setFeed(false); setProfile(false); setChat(false); setPassword(false); setListing(false); setBooking(false); setReview(false)  } }><i className="fal fa-file-plus"></i> Add New</a></li>
                                 <li>
@@ -83,9 +85,9 @@ const Sec1 = (props) => {
                 {/* dashboard content*/}
                 {dashboard ? <Dashboard /> : ''}
                 {feed ? <Feed /> : ''}
-                {profile ? <Profile /> : ''}
+                {profile ? <Profile user={props.user} state={props.state} dispatch={props.dispatch} /> : ''}
                 {chat ? <Chat /> : ''}
-                {password ? <Password /> : ''}
+                {password ? <Password user={props.user} dispatch={props.dispatch}/> : ''}
                 {listing ? <Listing /> : ''}
                 {booking ? <Booking /> : ''}
                 {review ? <Review /> : ''}
