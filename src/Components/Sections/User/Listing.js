@@ -5,17 +5,6 @@ import { appendScript } from '../../../Assets/utils/appendScript';
 import all1 from '../../../Assets/images/all/1.jpg';
 
 const Listing = () => {
-
-    useEffect(() => {
-        const appendScripts = () => {
-
-            appendScript("/js/jquery.min.js", false);
-            appendScript("/js/plugins.js", false);
-            appendScript("/js/scripts.js", false);
-
-        }
-        appendScripts();
-    }, []);
         
     return (
         <div className="col-md-9">

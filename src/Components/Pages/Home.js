@@ -1,10 +1,13 @@
-import React, { useEffect, Fragment, useContext } from 'react';
+import React, { useEffect, Fragment, useContext, useState } from 'react';
+import app from '../../firebase';
 import MetaTags from 'react-meta-tags';
 import Header from '../Layouts/Header';
 import Footer from '../Layouts/Footer';
 import AuthForm from '../Layouts/AuthForm';
 import Content from '../Sections/Home/Content';
 import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import { NotificationManager } from 'react-notifications';
 import { UserContext } from "../../Contexts/User/userContext";
 
 import { appendScript } from '../../Assets/utils/appendScript';
@@ -13,6 +16,26 @@ import $ from "jquery";
 const Home = () => {
 
     const [state, dispatch] = useContext(UserContext);
+    const [user, setUser] = useState('');
+    useEffect(() => {
+        const fetchUser = async () => {
+            if (state.user.email) {
+                const db = app.firestore()
+                const userRef = db.collection('Users');
+                const snapshot = await userRef.where('Email', '==', state.user.email).get();
+                if (snapshot.empty) {
+                    NotificationManager.error('Verify your connection');
+                    return;
+                }
+
+                snapshot.forEach(doc => {
+                    setUser(doc.data())
+                });
+            }
+
+        }
+        fetchUser()
+    })
 
     useEffect(() => {
         const appendScripts = () => {
@@ -97,7 +120,7 @@ const Home = () => {
                     />
                 </MetaTags>
                 <div id="main">
-                    <Header state={state} dispatch={dispatch} />
+                    <Header user={user} state={state} dispatch={dispatch} />
 
                     <NotificationContainer />
                     <div id="wrapper">
@@ -118,7 +141,7 @@ const Home = () => {
                             </div>
                         </div>
                     </div>
-                    <AuthForm state={state} dispatch={dispatch} />
+                    <AuthForm user={user} state={state} dispatch={dispatch} />
                     <a className="to-top"><i className="fas fa-caret-up"></i></a>  
                 </div>
             </Fragment>

@@ -6,17 +6,6 @@ import avatar1 from '../../../Assets/images/avatar/1.jpg';
 
 const Booking = () => {
 
-    useEffect(() => {
-        const appendScripts = () => {
-
-            appendScript("/js/jquery.min.js", false);
-            appendScript("/js/plugins.js", false);
-            appendScript("/js/scripts.js", false);
-
-        }
-        appendScripts();
-    }, []);
-
     return (
         <div className="col-md-9">
             <div className="dashboard-title   fl-wrap">

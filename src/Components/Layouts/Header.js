@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { Link, useHistory } from 'react-router-dom';
-import app from '../../firebase';
+import { Link } from 'react-router-dom';
 import logo from '../../Assets/images/logo.png';
 import avatar7 from '../../Assets/images/avatar/7.png';
 import thumbnail1 from '../../Assets/images/gallery/thumbnail/1.png';
@@ -19,7 +18,7 @@ const  Header = (props) => {
             <div className="header-search_btn show-search-button"><i className="fal fa-search"></i><span>Search</span></div>
             {/*  header-search_btn end */}
             {/*  header opt  */}
-            {props.state.active ? <UserHeader state={props.state} dispatch={props.dispatch} /> : <GuestHeader />}
+            {props.state.active ? <UserHeader user={props.user} state={props.state} dispatch={props.dispatch} /> : <GuestHeader />}
             {/*  header opt end */}                                
             {/*  nav-button-wrap */} 
             <div className="nav-button-wrap color-bg">
@@ -158,8 +157,8 @@ function UserHeader(props) {
             <div className="cart-btn show-header-modal" data-microtip-position="bottom" role="tooltip" aria-label="Your Wishlist"><i className="fal fa-heart"></i><span className="cart-counter green-bg"></span> </div>
             <div className="header-user-menu">
                 <div className={userUl ? "header-user-name hu-menu-visdec" : "header-user-name"} onClick={() => { setUserUl(!userUl); }}>
-                    <span><img src={props.state.user.photoUrl ? props.state.user.photoUrl : avatar7} alt="" /></span>
-                            Hello , {props.state.user.displayName ? props.state.user.displayName : ''}
+                    <span><img src={props.user.photoUrl ? props.user.photoUrl : avatar7} alt="" /></span>
+                            <p className="display-name">Hello , {props.user.displayName ? props.user.displayName : ''}</p>
                 </div>
                 <ul className={userUl ? "hu-menu-vis" : ""}>
                     <li><Link to={'/user'}> Edit profile</Link></li>

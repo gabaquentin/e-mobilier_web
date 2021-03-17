@@ -83,7 +83,9 @@ const AuthForm = (props) => {
                         First_Name: first_name.value,
                         displayName: last_name.value,
                         Phone: phone,
-                        photoUrl: null,
+                        photoUrl: '',
+                        Address: '',
+                        About: '',
                         Role: 'CUSTOMER',
                         Email: userCredential.user.email
                     })

@@ -1,4 +1,5 @@
-import React, { useEffect, Fragment, useContext } from 'react';
+import React, { useEffect, Fragment, useContext, useState } from 'react';
+import app from '../../firebase';
 import { UserContext } from "../../Contexts/User/userContext";
 import { Link } from 'react-router-dom';
 import MetaTags from 'react-meta-tags';
@@ -6,6 +7,8 @@ import Header from './Header';
 import AuthForm from '../Layouts/AuthForm';
 import Footer from './Footer';
 import { NotificationContainer } from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
+import { NotificationManager } from 'react-notifications';
 import { appendScript } from '../../Assets/utils/appendScript'
 
 import hero1 from '../../Assets/images/bg/hero/1.jpg'
@@ -13,14 +16,31 @@ import hero1 from '../../Assets/images/bg/hero/1.jpg'
 const NotFound = () => {
 
     const[state, dispatch] = useContext(UserContext);
+    const [user, setUser] = useState('');
+    useEffect(() => {
+        const fetchUser = async () => {
+            if (state.user.email) {
+                const db = app.firestore()
+                const userRef = db.collection('Users');
+                const snapshot = await userRef.where('Email', '==', state.user.email).get();
+                if (snapshot.empty) {
+                    NotificationManager.error('Verify your connection');
+                    return;
+                }
+
+                snapshot.forEach(doc => {
+                    setUser(doc.data())
+                });
+            }
+        }
+        fetchUser()
+    })
 
     useEffect(() => {
         const appendScripts = async () => {
 
-            //appendScript("https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js");
             appendScript("/js/jquery.min.js", false);
             appendScript("/js/plugins.js");
-            //appendScript("/js/jquery.matchHeight.js");
             appendScript("/js/scripts.js");
 
         }
@@ -37,7 +57,7 @@ const NotFound = () => {
                 />
             </MetaTags>
             <div id="main">
-                <Header state={state} dispatch={dispatch} />
+                <Header user={user} state={state} dispatch={dispatch} />
                 <NotificationContainer />
                 <div id="wrapper">
                     <div class="content">
@@ -64,7 +84,7 @@ const NotFound = () => {
                     </div>
                 </div>
                 <Footer />
-                <AuthForm state={state} dispatch={dispatch} />
+                <AuthForm user={user} state={state} dispatch={dispatch} />
                 <a class="to-top"><i class="fas fa-caret-up"></i></a>
             </div>
         </Fragment>
