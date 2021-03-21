@@ -29,13 +29,14 @@ const Home = () => {
                 }
 
                 snapshot.forEach(doc => {
-                    setUser(doc.data())
+                    setUser(doc.data());
                 });
+
             }
 
         }
         fetchUser()
-    })
+    }, [state])
 
     useEffect(() => {
         const appendScripts = () => {

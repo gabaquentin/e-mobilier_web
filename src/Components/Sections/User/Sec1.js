@@ -5,7 +5,7 @@ import { NotificationManager } from 'react-notifications';
 import Dashboard from './Dashboard';
 import Feed from './Feed';
 import Profile from './Profile';
-import Chat from './Chat';
+import Chats from './Chats';
 import Password from './Password';
 import Listing from './Listing';
 import Booking from './Booking';
@@ -40,7 +40,7 @@ const Sec1 = (props) => {
                                 <li><a href="#dashboard" className={dashboard ? 'user-profile-act' : ''} onClick={() => { setDashboard(true); setFeed(false); setProfile(false); setChat(false); setPassword(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)   } }><i className="fal fa-chart-line"></i>Dashboard</a></li>
                                 <li><a href="#feeds" className={feed ? 'user-profile-act' : ''} onClick={() => { setFeed(true); setDashboard(false); setProfile(false); setChat(false); setPassword(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)  } }><i className="fal fa-rss"></i>Your Feed <span style={{ backgroundColor: '#5ECEB1' }}>7</span></a></li>
                                 <li><a href="#edit-profile" className={profile ? 'user-profile-act' : ''} onClick={() => { setProfile(true); setDashboard(false); setFeed(false); setChat(false); setPassword(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)  } }><i className="fal fa-user-edit"></i> Edit profile</a></li>
-                                <li><a href="#chat" className={chat ? 'user-profile-act' : ''} onClick={() => { setChat(true); setDashboard(false); setFeed(false); setProfile(false); setPassword(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)  } }><i className="fal fa-envelope"></i> Messages <span style={{ backgroundColor: '#5ECEB1' }}>3</span></a></li>
+                                    <li><a href="#chat" className={chat ? 'user-profile-act' : ''} onClick={() => { setChat(true); setDashboard(false); setFeed(false); setProfile(false); setPassword(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false) }}><i className="fal fa-envelope"></i> Messages <span style={{ backgroundColor: '#5ECEB1' }}>{props.unreadMessages}</span></a></li>
                                 <li><a href="#change-password" className={password ? 'user-profile-act' : ''} onClick={() => { setPassword(true); setDashboard(false); setFeed(false); setProfile(false); setChat(false); setListing(false); setBooking(false); setReview(false); setAdd_listing(false)  } }><i className="fal fa-key"></i>Change Password</a></li>
                                 <li>
                                     <a href="#" className="submenu-link"><i className="fal fa-plus"></i>Submenu</a>
@@ -86,7 +86,7 @@ const Sec1 = (props) => {
                 {dashboard ? <Dashboard /> : ''}
                 {feed ? <Feed /> : ''}
                 {profile ? <Profile user={props.user} state={props.state} dispatch={props.dispatch} /> : ''}
-                {chat ? <Chat /> : ''}
+                {chat ? <Chats user={props.user} state={props.state} dispatch={props.dispatch} /> : ''}
                 {password ? <Password user={props.user} dispatch={props.dispatch}/> : ''}
                 {listing ? <Listing /> : ''}
                 {booking ? <Booking /> : ''}

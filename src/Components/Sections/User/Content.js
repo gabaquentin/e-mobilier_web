@@ -8,7 +8,7 @@ const Content = (props) => {
         <AuthProvider>
             <Fragment>
                 <Hero user={props.user} state={props.state} dispatch={props.dispatch}/>
-                <Sec1 user={props.user} state={props.state} dispatch={props.dispatch}/>
+                <Sec1 unreadMessages={props.unreadMessages} user={props.user} state={props.state} dispatch={props.dispatch}/>
                 <div class="limit-box fl-wrap"></div>
             </Fragment >
         </AuthProvider>

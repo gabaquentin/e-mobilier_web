@@ -34,7 +34,7 @@ const NotFound = () => {
             }
         }
         fetchUser()
-    })
+    }, [])
 
     useEffect(() => {
         const appendScripts = async () => {

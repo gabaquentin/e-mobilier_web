@@ -3,6 +3,7 @@ import "firebase/auth";
 import 'firebase/firestore';
 import 'firebase/storage';
 import "firebase/analytics";
+import "firebase-admin";
 
 const app = firebase.initializeApp({
     apiKey: "AIzaSyDagkUmxY8WQ5Th7zIf12QkqctyvDf6P8k",

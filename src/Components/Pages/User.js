@@ -5,6 +5,7 @@ import Header from '../Layouts/Header';
 import Footer from '../Layouts/Footer';
 import AuthForm from '../Layouts/AuthForm';
 import Content from '../Sections/User/Content';
+import Cwo from '../Sections/User/Cwo';
 import { NotificationContainer } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
 import { NotificationManager } from 'react-notifications';
@@ -18,6 +19,8 @@ const User = () => {
 
     const [state, dispatch] = useContext(UserContext);
     const [user, setUser] = useState('');
+    const [unreadMessages, setUnreadMessages] = useState('');
+
     useEffect(() => {
         const fetchUser = async () => {
             if (state.user.email) {
@@ -34,8 +37,41 @@ const User = () => {
                 });
             }
         }
-        fetchUser()
-    })
+
+        fetchUser();
+        
+    }, [state])
+
+    useEffect(() => {
+        const fetchChat = async () => {
+            if (state.user.uid) {
+                const db = app.firestore()
+                const chatsRef = db.collection('Chats');
+                const snapshot = await chatsRef.where('Users', 'array-contains-any', [state.user.uid]).get();
+                if (snapshot.empty) {
+                    setUnreadMessages(0);
+                    return;
+                }
+                let tempUnread = 0;
+                snapshot.forEach(doc => {
+                    let position = 0;
+
+                    if (doc.data().Unreads[0].Id == state.user.uid) {
+                        position = 0;
+                    }
+                    else {
+                        position = 1;
+                    }
+
+                    if (doc.data().Unreads[position].Value != 0) {
+                        tempUnread += doc.data().Unreads[position].Value;
+                    }
+                });
+                setUnreadMessages(tempUnread);
+            }
+        }
+        fetchChat();
+    }, [])
 
     useEffect(() => {
         const headerScripts = () => {
@@ -109,12 +145,16 @@ const User = () => {
                 <NotificationContainer />
                 <div id="wrapper">
                     <div className="content">
-                        <Content user={user} state={state} dispatch={dispatch} />
+                        <Content unreadMessages={unreadMessages} user={user} state={state} dispatch={dispatch} />
                     </div>
                 </div>
                 <Footer />
                 <AuthForm state={state} dispatch={dispatch} />
                 <a className="to-top"><i className="fas fa-caret-up"></i></a>
+                {/*
+                <div className="chat-widget-button cwb tolt" data-microtip-position="left" data-tooltip="Chat With Owner" onClick={() => { $(".chat-body").animate({ scrollTop: $('.chat-body').get(0).scrollHeight }, 500); }}><i className="fal fa-comments-alt"></i></div>
+                <Cwo owner="LyrNeSWTUAPsctC8QILBV5tZvyu1" ownerName="Gaspard" user={user} state={state} dispatch={dispatch}/>
+                 */}
             </div>
         </Fragment>
     );
