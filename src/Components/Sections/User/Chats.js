@@ -19,7 +19,6 @@ import tchat_container from '../../../Assets/images/messages/tchat_container.png
 
 const Chat = (props) => {
 
-    const { currentUser } = useAuth();
     const [messages, setMessages] = useState({});
     const [overview, setOverview] = useState([]);
     const [empty, setEmpty] = useState(false);
@@ -161,7 +160,7 @@ const Chat = (props) => {
 
         }
         fetchChat();
-    });
+    },[]);
 
     useEffect(() => {
         if (overview.length == 0) {
@@ -170,8 +169,8 @@ const Chat = (props) => {
         else {
             setTimeout(function () { setEmpty(false); }, 5000);
         }
-        
-    }, [overview]);
+
+    },[]);
 
     function setActive(contact) {
 
