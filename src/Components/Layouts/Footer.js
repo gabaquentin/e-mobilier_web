@@ -23,9 +23,9 @@ class Footer extends Component {
                                 <div className="subscribe-widget">
                                     <div className="subcribe-form">
                                         <form id="subscribe">
-                                            <input className="enteremail fl-wrap" name="email" id="subscribe-email" placeholder="Enter Your Email" spellcheck="false" type="text" />
-                                            <button type="submit" id="subscribe-button" class="subscribe-button"><i class="fal fa-envelope"></i></button>
-                                            <label for="subscribe-email" className="subscribe-message"></label>
+                                            <input className="enteremail fl-wrap" name="email" id="subscribe-email" placeholder="Enter Your Email" spellCheck="false" type="text" />
+                                            <button type="submit" id="subscribe-button" className="subscribe-button"><i className="fal fa-envelope"/></button>
+                                            <label form="subscribe-email" className="subscribe-message"/>
                                         </form>
                                     </div>
                                 </div>
@@ -45,18 +45,18 @@ class Footer extends Component {
                                     <div className="footer-contacts-widget fl-wrap">
                                         <p>In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis cursus. Nulla eu mi magna. Etiam suscipit commodo gravida.   </p>
                                         <ul  className="footer-contacts fl-wrap no-list-style">
-                                            <li><span><i className="fal fa-envelope"></i> Mail :</span><a href="#" target="_blank">yourmail@domain.com</a></li>
-                                            <li> <span><i className="fal fa-map-marker"></i> Adress :</span><a href="#" target="_blank">USA 27TH Brooklyn NY</a></li>
-                                            <li><span><i className="fal fa-phone"></i> Phone :</span><a href="#">+7(111)123456789</a></li>
+                                            <li><span><i className="fal fa-envelope"/> Mail :</span><a href="#" target="_blank">yourmail@domain.com</a></li>
+                                            <li> <span><i className="fal fa-map-marker"/> Adress :</span><a href="#" target="_blank">USA 27TH Brooklyn NY</a></li>
+                                            <li><span><i className="fal fa-phone"/> Phone :</span><a href="#">+7(111)123456789</a></li>
                                         </ul>
                                         <div className="footer-social">
                                             <span>Find  us on: </span>
                                             <ul className="no-list-style">
-                                                <li><a href="#" target="_blank"><i className="fab fa-facebook-f"></i></a></li>
-                                                <li><a href="#" target="_blank"><i className="fab fa-twitter"></i></a></li>
-                                                <li><a href="#" target="_blank"><i className="fab fa-instagram"></i></a></li>
-                                                <li><a href="#" target="_blank"><i className="fab fa-vk"></i></a></li>
-                                                <li><a href="#" target="_blank"><i className="fab fa-whatsapp"></i></a></li>
+                                                <li><a href="#" target="_blank"><i className="fab fa-facebook-f"/></a></li>
+                                                <li><a href="#" target="_blank"><i className="fab fa-twitter"/></a></li>
+                                                <li><a href="#" target="_blank"><i className="fab fa-instagram"/></a></li>
+                                                <li><a href="#" target="_blank"><i className="fab fa-vk"/></a></li>
+                                                <li><a href="#" target="_blank"><i className="fab fa-whatsapp"/></a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -73,25 +73,25 @@ class Footer extends Component {
                                                 <a href="#" className="widget-posts-img"><img src={news} className="respimg" alt="" /></a>
                                                 <div className="widget-posts-descr">
                                                     <a href="#" title="">Vivamus dapibus rutrum</a>
-                                                    <span className="widget-posts-date"><i className="fal fa-calendar"></i> 21 Mar 09.05 </span> 
+                                                    <span className="widget-posts-date"><i className="fal fa-calendar"/> 21 Mar 09.05 </span>
                                                 </div>
                                             </li>
-                                            <li class="clearfix">
+                                            <li className="clearfix">
                                                 <a href="#" className="widget-posts-img"><img src={news} className="respimg" alt="" /></a>
                                                 <div className="widget-posts-descr">
                                                     <a href="#" title=""> In hac habitasse platea</a>
-                                                    <span className="widget-posts-date"><i className="fal fa-calendar"></i> 7 Mar 18.21 </span> 
+                                                    <span className="widget-posts-date"><i className="fal fa-calendar"/> 7 Mar 18.21 </span>
                                                 </div>
                                             </li>
                                             <li className="clearfix">
                                                 <a href="#" className="widget-posts-img"><img src={news} className="respimg" alt="" /></a>
                                                 <div className="widget-posts-descr">
                                                     <a href="#" title="">Tortor tempor in porta</a>
-                                                    <span className="widget-posts-date"><i className="fal fa-calendar"></i> 7 Mar 16.42 </span>
+                                                    <span className="widget-posts-date"><i className="fal fa-calendar"/> 7 Mar 16.42 </span>
                                                 </div>
                                             </li>
                                         </ul>
-                                        <a href="blog.html" className="footer-link">Read all <i className="fal fa-long-arrow-right"></i></a>
+                                        <a href="blog.html" className="footer-link">Read all <i className="fal fa-long-arrow-right"/></a>
                                     </div>
                                 </div>
                             </div>
@@ -100,19 +100,20 @@ class Footer extends Component {
                             <div className="col-md-4">
                                 <div className="footer-widget fl-wrap ">
                                     <h3>Our  Twitter</h3>
-                                    <div className="twitter-holder fl-wrap scrollbar-inner2" data-simplebar data-simplebar-auto-hide="false">
-                                        <div id="footer-twiit"></div>
+                                    <div className="twitter-holder fl-wrap scrollbar-inner2" data-simplebar=""
+                                         data-simplebar-auto-hide="false">
+                                        <div id="footer-twiit"/>
                                     </div>
-                                    <a href="#" className="footer-link twitter-link" target="_blank">Follow us <i className="fal fa-long-arrow-right"></i></a>
+                                    <a href="#" className="footer-link twitter-link" target="_blank">Follow us <i className="fal fa-long-arrow-right"/></a>
                                 </div>
                             </div>
                             {/* footer-widget end */}
                         </div>
                     </div>
                     {/* footer bg */}
-                    <div className="footer-bg" data-ran="4"></div>
+                    <div className="footer-bg" data-ran="4"/>
                     <div className="footer-wave">
-                        <svg viewbox="0 0 100 25">
+                        <svg viewBox="0 0 100 25">
                             <path fill="#fff" d="M0 30 V12 Q30 17 55 12 T100 11 V30z" />
                         </svg>
                     </div>
@@ -124,8 +125,8 @@ class Footer extends Component {
                     <div className="container">
                         <div className="copyright"> &#169; Townhub 2019 .  All rights reserved.</div>
                         <div className="lang-wrap">
-                            <div className="show-lang"><span><i className="fal fa-globe-europe"></i><strong>En</strong></span><i className="fa fa-caret-down arrlan"></i></div>
-                            <ul class="lang-tooltip lang-action no-list-style">
+                            <div className="show-lang"><span><i className="fal fa-globe-europe"/><strong>En</strong></span><i className="fa fa-caret-down arrlan"/></div>
+                            <ul className="lang-tooltip lang-action no-list-style">
                                 <li><a href="#" className="current-lan" data-lantext="En">English</a></li>
                                 <li><a href="#" data-lantext="Fr">Français</a></li>
                                 <li><a href="#" data-lantext="Es">Español</a></li>

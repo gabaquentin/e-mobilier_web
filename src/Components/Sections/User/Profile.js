@@ -5,13 +5,12 @@ import app from '../../../firebase';
 import 'react-notifications/lib/notifications.css';
 import { NotificationManager } from 'react-notifications';
 
-import { appendScript } from '../../../Assets/utils/appendScript';
-
 import PhoneInput from 'react-phone-number-input';
 
 import Swal from 'sweetalert2';
 
 import { isValidPhoneNumber } from 'react-phone-number-input';
+import {appendScript} from "../../../Assets/utils/appendScript";
 
 const Profile = (props) => {
 
@@ -26,6 +25,13 @@ const Profile = (props) => {
     const addressRef = useRef();
     const aboutRef = useRef();
     const avatarRef = useRef();
+
+    useEffect(() => {
+        const appendScripts = () => {
+            appendScript("/js/scripts.js", false);
+        };
+        appendScripts();
+    },[]);
 
     function uploadAvatar(storageRef, child, db) {
         storageRef = app.storage().ref();
@@ -110,7 +116,7 @@ const Profile = (props) => {
         e.preventDefault();
         try {
             setdisabled(true);
-            if (first_nameRef.current.value == props.user.First_Name && last_nameRef.current.value == props.user.displayName && emailRef.current.value == props.user.Email && addressRef.current.value == props.user.Address && aboutRef.current.value == props.user.About && phone == props.user.Phone && !document.getElementById('avatar-input').files[0]) {
+            if (first_nameRef.current.value === props.user.First_Name && last_nameRef.current.value === props.user.displayName && emailRef.current.value === props.user.Email && addressRef.current.value === props.user.Address && aboutRef.current.value === props.user.About && phone === props.user.Phone && !document.getElementById('avatar-input').files[0]) {
                 NotificationManager.info('Nothing to update');
                 setModify(false);
                 setdisabled(false);
@@ -121,7 +127,7 @@ const Profile = (props) => {
                 const promises = [];
 
                 if (isValidPhoneNumber(phone)) {
-                    if (emailRef.current.value != props.user.Email) {
+                    if (emailRef.current.value !== props.user.Email) {
                         promises.push(changeEmai(db));
                     }
                     if (document.getElementById('avatar-input').files[0]) {
@@ -131,7 +137,7 @@ const Profile = (props) => {
                     Promise.all(promises).then(() => {
                         updateProfile(db);
                     }).catch((error) => {
-                        console.log(error)
+                        console.log(error);
                         NotificationManager.info('Please try again some error occured');
                         setdisabled(false);
                     }).finally(() => {
@@ -155,7 +161,7 @@ const Profile = (props) => {
             <div className="dashboard-title fl-wrap" style={{ display: 'flex', flexDirection: 'row-reverse' }}>
                 <h3 style={{ width: '10em', marginTop: '1em', marginRight: '1em' }}>Your Profile</h3>
                 <div className="custom-form">
-                    {modify ? <button className="btn  color2-bg  float-btn " disabled={disabled} onClick={editProfile}>Save Changes<i className="fal fa-save"></i></button> : <button className="btn  color2-bg  float-btn " onClick={() => { setModify(true) }}>Enable<i className="fal fa-edit"></i></button>}
+                    {modify ? <button className="btn  color2-bg  float-btn " disabled={disabled} onClick={editProfile}>Save Changes<i className="fal fa-save"/></button> : <button className="btn  color2-bg  float-btn " onClick={() => { setModify(true) }}>Enable<i className="fal fa-edit"/></button>}
                 </div>
             </div>
             {/* profile-edit-container*/}
@@ -163,21 +169,21 @@ const Profile = (props) => {
                 <div className="custom-form">
                     <div className="row">
                         <div className="col-sm-6">
-                            <label>First Name <i className="fal fa-user"></i></label>
+                            <label>First Name <i className="fal fa-user"/></label>
                             {modify ? <input type="text" style={{ borderColor: '#5ECEB1' }} placeholder="Fisrt Name" defaultValue={props.user.First_Name} ref={first_nameRef} />
 
                                     : <input disabled style={{ borderColor: '#CF382D' }} type="text" placeholder="Fisrt Name" defaultValue={props.user.First_Name} />
                             }
                         </div>
                         <div className="col-sm-6">
-                            <label>Last Name <i className="fal fa-user"></i></label>
+                            <label>Last Name <i className="fal fa-user"/></label>
                             {modify ? <input type="text" style={{ borderColor: '#5ECEB1' }} placeholder="Last Name" defaultValue={props.user.displayName} ref={last_nameRef} />
 
-                                    : <input disabled style={{ borderColor: '#CF382D' }}type="text" placeholder="Last Name" defaultValue={props.user.displayName}  />
+                                    : <input disabled style={{ borderColor: '#CF382D' }} type="text" placeholder="Last Name" defaultValue={props.user.displayName}  />
                             }
                         </div>
                         <div className="col-sm-6">
-                            <label>Email Address<i className="far fa-envelope"></i>  </label>
+                            <label>Email Address<i className="far fa-envelope"/>  </label>
                             {modify ? <input type="email" style={{ borderColor: '#5ECEB1' }} placeholder="Email" defaultValue={props.user.Email} ref={emailRef} />
 
                                     : <input disabled style={{ borderColor: '#CF382D' }} type="email" placeholder="Email" defaultValue={props.user.Email} />
@@ -185,13 +191,13 @@ const Profile = (props) => {
                         </div>
                         <div className="col-sm-6">
                             <label>Phone </label>
-                            {modify ? <PhoneInput class="nice-select chosen-select" id="phone-register-input" placeholder="Enter phone number" value={phone} onChange={setPhone} readonly />
+                            {modify ? <PhoneInput style={{ borderColor: '#5ECEB1' }} id="phone-register-input" placeholder="Enter phone number" value={phone} onChange={setPhone} />
 
-                                    : <PhoneInput disabled style={{ borderColor: '#5ECEB1' }} class="nice-select chosen-select" id="phone-register-input" placeholder="Enter phone number" value={phone} readonly />
+                                    : <PhoneInput disabled style={{ borderColor: '#CF382D'}} id="phone-register-input" placeholder="Enter phone number" value={phone} readOnly />
                             }
                         </div>
                         <div className="col-sm-6">
-                            <label> Address <i className="fas fa-map-marker"></i>  </label>
+                            <label> Address <i className="fas fa-map-marker"/>  </label>
                             {modify ? <input type="text" style={{ borderColor: '#5ECEB1' }} placeholder="Cameroon,Yaounde Biyem-Assi Lycee" defaultValue={props.user.Address} ref={addressRef} />
 
                                     : <input disabled style={{ borderColor: '#CF382D' }} type="text" placeholder="Cameroon,Yaounde Biyem-Assi Lycee" defaultValue={props.user.Address}/>
@@ -200,20 +206,26 @@ const Profile = (props) => {
 
                     </div>
                     <label> Notes</label>
-                    {modify ? <textarea cols="40" rows="3" placeholder="About Me" style={{ marginBottom: '20px', borderColor: '#5ECEB1' }} defaultValue={props.user.About} ref={aboutRef} ></textarea>
+                    {modify ? <textarea cols="40" rows="3" placeholder="About Me" style={{
+    marginBottom: '20px',
+    borderColor: '#5ECEB1'
+}} defaultValue={props.user.About} ref={aboutRef} />
 
-                            : <textarea disabled cols="40" rows="3" placeholder="About Me" style={{marginBottom: '20px', borderColor: '#CF382D'}} defaultValue={props.user.About}></textarea>
+                            : <textarea disabled cols="40" rows="3" placeholder="About Me" style={{
+    marginBottom: '20px',
+    borderColor: '#CF382D'
+}} defaultValue={props.user.About}/>
                     }
-                    <div className="clearfix"></div>
+                    <div className="clearfix"/>
                     <label>Change Avatar</label>
-                    <div className="clearfix"></div>
+                    <div className="clearfix"/>
                     <div className="listsearch-input-item fl-wrap">
                         {modify ? (
                             <div className="fuzone" style={{ borderColor: '#5ECEB1' }}>
                                 <form id="avatar-form">
                                     <div className="fu-text">
-                                        <span><i className="fal fa-images"></i> Click here or drop files to upload</span>
-                                        <div className="photoUpload-files fl-wrap"></div>
+                                        <span><i className="fal fa-images"/> Click here or drop files to upload</span>
+                                        <div className="photoUpload-files fl-wrap"/>
                                     </div>
                                     <input type="file" className="upload" accept="image/x-png,image/gif,image/jpeg" id="avatar-input"/>
                                 </form>
@@ -224,8 +236,8 @@ const Profile = (props) => {
                                 <div className="fuzone" style={{ borderColor: '#CF382D' }}>
                                     <form >
                                         <div className="fu-text">
-                                            <span><i className="fal fa-arrow-up"></i> You need to enable editing to upload file</span>
-                                            <div className="photoUpload-files fl-wrap"></div>
+                                            <span><i className="fal fa-arrow-up"/> You need to enable editing to upload file</span>
+                                            <div className="photoUpload-files fl-wrap"/>
                                         </div>
                                          <input disabled type="file" className="upload" ref={avatarRef} />
                                     </form>
@@ -239,6 +251,6 @@ const Profile = (props) => {
                 {/* profile-edit-container end*/}
         </div>
     );
-}
+};
 
 export default Profile;

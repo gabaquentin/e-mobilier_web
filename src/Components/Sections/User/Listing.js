@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-
-import { appendScript } from '../../../Assets/utils/appendScript';
+import React from 'react';
 
 import all1 from '../../../Assets/images/all/1.jpg';
 
@@ -17,8 +15,8 @@ const Listing = () => {
                                 <div className="dashboard-list fl-wrap">
                     <div className="dashboard-message">
                         <div className="booking-list-contr">
-                            <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i className="fal fa-edit"></i></a>
-                            <a href="#" className="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i className="fal fa-trash"></i></a>
+                            <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i className="fal fa-edit"/></a>
+                            <a href="#" className="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i className="fal fa-trash"/></a>
                         </div>
                         <div className="dashboard-message-text">
                             <img src={all1} alt="" />
@@ -32,8 +30,8 @@ const Listing = () => {
                                 <div className="dashboard-list fl-wrap">
                         <div className="dashboard-message">
                             <div className="booking-list-contr">
-                                <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i className="fal fa-edit"></i></a>
-                                <a href="#" className="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i className="fal fa-trash"></i></a>
+                                <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i className="fal fa-edit"/></a>
+                                <a href="#" className="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i className="fal fa-trash"/></a>
                             </div>
                             <div className="dashboard-message-text">
                                 <img src={all1} alt="" />
@@ -47,8 +45,8 @@ const Listing = () => {
                                 <div className="dashboard-list fl-wrap">
                             <div className="dashboard-message">
                                 <div className="booking-list-contr">
-                                    <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i className="fal fa-edit"></i></a>
-                                    <a href="#" className="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i className="fal fa-trash"></i></a>
+                                    <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i className="fal fa-edit"/></a>
+                                    <a href="#" className="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i className="fal fa-trash"/></a>
                                 </div>
                                 <div className="dashboard-message-text">
                                     <img src={all1} alt="" />
@@ -62,8 +60,8 @@ const Listing = () => {
                                 <div className="dashboard-list fl-wrap">
                                 <div className="dashboard-message">
                                     <div className="booking-list-contr">
-                                        <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i className="fal fa-edit"></i></a>
-                                        <a href="#" className="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i className="fal fa-trash"></i></a>
+                                        <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i className="fal fa-edit"/></a>
+                                        <a href="#" className="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i className="fal fa-trash"/></a>
                                     </div>
                                     <div className="dashboard-message-text">
                                         <img src={all1} alt="" />
@@ -77,8 +75,8 @@ const Listing = () => {
                                 <div className="dashboard-list fl-wrap">
                                     <div className="dashboard-message">
                                         <div className="booking-list-contr">
-                                            <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i className="fal fa-edit"></i></a>
-                                            <a href="#" className="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i className="fal fa-trash"></i></a>
+                                            <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Edit"><i className="fal fa-edit"/></a>
+                                            <a href="#" className="red-bg tolt" data-microtip-position="left" data-tooltip="Delete"><i className="fal fa-trash"/></a>
                                         </div>
                                         <div className="dashboard-message-text">
                                             <img src={all1} alt="" />
@@ -91,16 +89,16 @@ const Listing = () => {
                             </div>
                                 {/* dashboard-list-box end*/}
                             <div className="pagination">
-                                    <a href="#" className="prevposts-link"><i className="fas fa-caret-left"></i><span>Prev</span></a>
+                                    <a href="#" className="prevposts-link"><i className="fas fa-caret-left"/><span>Prev</span></a>
                                     <a href="#">1</a>
                                     <a href="#" className="current-page">2</a>
                                     <a href="#">3</a>
                                     <a href="#">...</a>
                                     <a href="#">7</a>
-                                    <a href="#" className="nextposts-link"><span>Next</span><i className="fas fa-caret-right"></i></a>
+                                    <a href="#" className="nextposts-link"><span>Next</span><i className="fas fa-caret-right"/></a>
                                 </div>
                             </div>
     );
-}
+};
 
 export default Listing;

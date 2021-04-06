@@ -1,29 +1,114 @@
-import { useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import logo from '../../Assets/images/logo.png';
 import avatar7 from '../../Assets/images/avatar/7.png';
 import thumbnail1 from '../../Assets/images/gallery/thumbnail/1.png';
 
 import $ from "jquery";
+import app from "../../firebase";
+import {NotificationManager} from "react-notifications";
+import {UserContext} from "../../Contexts/User/userContext";
 
-const  Header = (props) => {
+const  Header = () => {
+
+    const [state, dispatch] = useContext(UserContext);
+    const [user, setUser] = useState({});
+    let history = useHistory();
+
+    useEffect(() => {
+        const headerScripts = () => {
+            $(".more-filter-option").on("click", function () {
+                $(".hidden-listing-filter").slideToggle(500);
+                $(this).find("span").toggleClass("mfilopact");
+            });
+            var headSearch = $(".header-search"),
+                ssbut = $(".show-search-button"),
+                wlwrp = $(".header-modal"),
+                wllink = $(".show-header-modal"),
+                mainheader = $(".main-header");
+            function showSearch() {
+                headSearch.addClass("vis-head-search").removeClass("vis-search");
+                ssbut.find("span").text("Close");
+                ssbut.find("i").addClass("vis-head-search-close");
+                mainheader.addClass("vis-searchdec");
+                hideWishlist();
+            }
+            function hideSearch() {
+                headSearch.removeClass("vis-head-search").addClass("vis-search");
+                ssbut.find("span").text("Search");
+                ssbut.find("i").removeClass("vis-head-search-close");
+                mainheader.removeClass("vis-searchdec");
+            }
+            ssbut.on("click", function () {
+                if ($(".header-search").hasClass("vis-search")) showSearch();
+                else hideSearch();
+            });
+            $(".header-search_close").on("click", function () {
+                hideSearch();
+            });
+            function showWishlist() {
+                wlwrp.fadeIn(1).addClass("vis-wishlist").removeClass("novis_wishlist")
+                hideSearch();
+                wllink.addClass("scwllink");
+            }
+            function hideWishlist() {
+                wlwrp.fadeOut(1).removeClass("vis-wishlist").addClass("novis_wishlist");
+                wllink.removeClass("scwllink");
+            }
+            wllink.on("click", function () {
+                if (wlwrp.hasClass("novis_wishlist")) showWishlist();
+                else hideWishlist();
+            });
+            $(".close-header-modal").on("click", function () {
+                hideWishlist();
+            });
+            var wlitle = $(".novis_wishlist .widget-posts li").length;
+            $(".header-modal-top h4 strong , .cart-btn span.cart-counter").text(wlitle);
+            $(".act-hiddenpanel").on("click", function () {
+                $(this).toggleClass("active-hidden-opt-btn").find("span").text($(this).find("span").text() === 'Close options' ? 'More options' : 'Close options');
+                $(".hidden-listing-filter").slideToggle(400);
+            });
+
+        };
+        headerScripts();
+    }, [state]);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            if (state.user.email) {
+                const db = app.firestore();
+                const userRef = db.collection('Users');
+                const snapshot = await userRef.where('Email', '==', state.user.email).get();
+                if (snapshot.empty) {
+                    NotificationManager.error('Verify your connection');
+                    return;
+                }
+
+                snapshot.forEach(doc => {
+                    setUser(doc.data())
+                });
+            }
+
+        };
+        fetchUser()
+    },[state]);
 
     return (
-        <header className={props.state.active ? 'main-header dsh-header': 'main-header'}>
+        <header className={state.active ? 'main-header dsh-header': 'main-header'}>
             {/*  logo */}
             <Link to={"/"} className="logo-holder"><img src={logo} alt="" /></Link>
             {/*  logo end */}
             {/*  header-search_btn */}         
-            <div className="header-search_btn show-search-button"><i className="fal fa-search"></i><span>Search</span></div>
+            <div className="header-search_btn show-search-button"><i className="fal fa-search"/><span>Search</span></div>
             {/*  header-search_btn end */}
             {/*  header opt  */}
-            {props.state.active ? <UserHeader user={props.user} state={props.state} dispatch={props.dispatch} /> : <GuestHeader />}
+            {state.active ? <UserHeader user={user} state={state} dispatch={dispatch} /> : <GuestHeader />}
             {/*  header opt end */}                                
             {/*  nav-button-wrap */} 
             <div className="nav-button-wrap color-bg">
                 <div className="nav-button">
-                    <span></span><span></span><span></span>
+                    <span/><span/><span/>
                 </div>
             </div>
             {/*  nav-button-wrap end */}
@@ -32,7 +117,7 @@ const  Header = (props) => {
                 <nav>
                     <ul className="no-list-style">
                         <li>
-                            <a href="#" className="act-link">Home <i className="fa fa-caret-down"></i></a>
+                            <a href="#" className="act-link">Home <i className="fa fa-caret-down"/></a>
                             {/* second level  */}   
                             <ul>
                                 <li><a href="index.html">Parallax Image</a></li>
@@ -44,38 +129,17 @@ const  Header = (props) => {
                             {/* second level end */}
                         </li>
                         <li>
-                            <a href="#">Listings <i className="fa fa-caret-down"></i></a>
-                            {/* second level  */}
-                            <ul>
-                                <li><a href="listing.html">Column map</a></li>
-                                <li><a href="listing2.html">Column map 2</a></li>
-                                <li><a href="listing3.html">Fullwidth Map</a></li>
-                                <li><a href="listing4.html">Fullwidth Map 2</a></li>
-                                <li><a href="listing5.html">Without Map</a></li>
-                                <li><a href="listing6.html">Without Map 2</a></li>
-                                <li>
-                                    <a href="#">Single <i className="fa fa-caret-down"></i></a>
-                                    {/* third  level   */}
-                                    <ul>
-                                        <li><a href="listing-single.html">Style 1</a></li>
-                                        <li><a href="listing-single2.html">Style 2</a></li>
-                                        <li><a href="listing-single3.html">Style 3</a></li>
-                                        <li><a href="listing-single4.html">Style 4</a></li>
-                                    </ul>
-                                    {/* third  level end */}
-                                </li>
-                            </ul>
-                            {/* second level end */}
+                            <Link to={"/listing"}>Listings</Link>
                         </li>
                         <li>
                             <a href="blog.html">News</a>
                         </li>
                         <li>
-                            <a href="#">Pages <i className="fa fa-caret-down"></i></a>
+                            <a href="#">Pages <i className="fa fa-caret-down"/></a>
                             {/* second level  */}   
                             <ul>
                                 <li>
-                                    <a href="#">Shop<i className="fa fa-caret-down"></i></a>
+                                    <a href="#">Shop<i className="fa fa-caret-down"/></a>
                                     {/* third  level   */}
                                     <ul>
                                         <li><a href="shop.html">Products</a></li>
@@ -108,15 +172,15 @@ const  Header = (props) => {
                     <div className="header-search-input-wrap fl-wrap">
                         {/*  header-search-input  */} 
                         <div className="header-search-input">
-                            <label><i className="fal fa-keyboard"></i></label>
+                            <label><i className="fal fa-keyboard"/></label>
                             <input type="text" placeholder="What are you looking for ?"   />  
                         </div>
                         {/*  header-search-input end  */}  
                         {/*  header-search-input  */} 
                         <div className="header-search-input location autocomplete-container">
-                            <label><i className="fal fa-map-marker"></i></label>
+                            <label><i className="fal fa-map-marker"/></label>
                             <input type="text" placeholder="Location..." className="autocomplete-input" id="autocompleteid2" />
-                            <a href="#"><i className="fal fa-dot-circle"></i></a>
+                            <a href="#"><i className="fal fa-dot-circle"/></a>
                         </div>
                         {/*  header-search-input end  */}                                        
                         {/*  header-search-input  */} 
@@ -132,14 +196,14 @@ const  Header = (props) => {
                             </select>
                         </div>
                         {/*  header-search-input end  */} 
-                        <button className="header-search-button green-bg" onclick="window.location.href='listing.html'"><i className="far fa-search"></i> Search </button>
+                        <button className="header-search-button green-bg" onClick={() => { history.push("/"); }}><i className="far fa-search"/> Search </button>
                     </div>
-                    <div className="header-search_close color-bg"><i className="fal fa-long-arrow-up"></i></div>
+                    <div className="header-search_close color-bg"><i className="fal fa-long-arrow-up"/></div>
                 </div>
             </div>
             {/*  header-search_container  end  */} 
             {/*  wishlist-wrap */} 
-            {props.state.active ? <UserWhishlist state={props.state} dispatch={props.dispatch} /> : <GuestWhishlist />}
+            {state.active ? <UserWhishlist state={state} dispatch={dispatch} /> : <GuestWhishlist />}
             {/* wishlist-wrap end  */} 
         </header>
     );
@@ -149,28 +213,30 @@ export default Header;
 
 function UserHeader(props) {
 
-    const [userUl, setUserUl] = useState(false)
+    const [userUl, setUserUl] = useState(false);
 
     return (
         <>
-            <a href="dashboard-add-listing.html" className="add-list color-bg">Add Listing <span><i className="fal fa-layer-plus"></i></span></a>
-            <div className="cart-btn show-header-modal" data-microtip-position="bottom" role="tooltip" aria-label="Your Wishlist"><i className="fal fa-heart"></i><span className="cart-counter green-bg"></span> </div>
+            {props.user.Role === "CUSTOMER" ? <a onClick={() => { $('.modal , .reg-overlay').fadeIn(200); $(".modal_main").addClass("vis_mr"); $("html, body").addClass("hid-body"); }} style={{ cursor:"pointer" }} className="add-list color-bg">Become Partner <span><i className="fal fa-layer-plus"/></span></a> : ""}
+            {props.user.Role === "PARTNER" ? <Link to={"/user#add_listing"} className="add-list color-bg">Add Listing <span><i className="fal fa-layer-plus"/></span></Link> : ""}
+
+            <div className="cart-btn show-header-modal" data-microtip-position="bottom" role="tooltip" aria-label="Your Wishlist"><i className="fal fa-heart"/><span className="cart-counter green-bg"/> </div>
             <div className="header-user-menu">
                 <div className={userUl ? "header-user-name hu-menu-visdec" : "header-user-name"} onClick={() => { setUserUl(!userUl); }}>
                     <span><img src={props.user.photoUrl ? props.user.photoUrl : avatar7} alt="" /></span>
                             <p className="display-name">Hello , {props.user.displayName ? props.user.displayName : ''}</p>
                 </div>
                 <ul className={userUl ? "hu-menu-vis" : ""}>
-                    <li><Link to={'/user'}> Edit profile</Link></li>
-                    <li><a href="dashboard-add-listing.html"> Add Listing</a></li>
-                    <li><a href="dashboard-bookings.html">  Bookings  </a></li>
-                    <li><a href="dashboard-review.html"> Reviews </a></li>
+                    <li><Link to={'/user#profile'}> Edit profile</Link></li>
+                    <li><Link to={"/user#add_listing"}> Add Listing</Link></li>
+                    <li><Link to={"/user#booking"}>  Bookings  </Link></li>
+                    <li><Link to={"/user#review"}> Reviews </Link></li>
                     <li><Link to="/" onClick={() => { props.dispatch({ type: "disconnected" }); } }>Log Out</Link></li>
                 </ul>
             </div>
             {/*  lang-wrap */}
             <div className="lang-wrap">
-                <div className="show-lang"><span><i className="fal fa-globe-europe"></i><strong>En</strong></span><i className="fa fa-caret-down arrlan"></i></div>
+                <div className="show-lang"><span><i className="fal fa-globe-europe"/><strong>En</strong></span><i className="fa fa-caret-down arrlan"/></div>
                 <ul className="lang-tooltip lang-action no-list-style">
                     <li><a href="#" className="current-lan" data-lantext="En">English</a></li>
                     <li><a href="#" data-lantext="Fr">Français</a></li>
@@ -186,7 +252,7 @@ function UserWhishlist(props) {
     return (
         <div className="header-modal novis_wishlist">
             {/*  header-modal-container */}
-            <div className="header-modal-container scrollbar-inner fl-wrap" data-simplebar>
+            <div className="header-modal-container scrollbar-inner fl-wrap" data-simplebar="">
                 {/* widget-posts */}
                 <div className="widget-posts  fl-wrap">
                     <ul className="no-list-style">
@@ -195,10 +261,10 @@ function UserWhishlist(props) {
                             </div>
                             <div className="widget-posts-descr">
                                 <h4><a href="listing-single.html">Iconic Cafe</a></h4>
-                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"></i> 40 Journal Square Plaza, NJ, USA</a></div>
+                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"/> 40 Journal Square Plaza, NJ, USA</a></div>
                                 <div className="widget-posts-descr-link"><a href="listing.html" >Restaurants </a>   <a href="listing.html">Cafe</a></div>
                                 <div className="widget-posts-descr-score">4.1</div>
-                                <div className="clear-wishlist"><i className="fal fa-times-circle"></i></div>
+                                <div className="clear-wishlist"><i className="fal fa-times-circle"/></div>
                             </div>
                         </li>
                         <li>
@@ -206,10 +272,10 @@ function UserWhishlist(props) {
                             </div>
                             <div className="widget-posts-descr">
                                 <h4><a href="listing-single.html">MontePlaza Hotel</a></h4>
-                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"></i> 70 Bright St New York, USA </a></div>
+                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"/> 70 Bright St New York, USA </a></div>
                                 <div className="widget-posts-descr-link"><a href="listing.html" >Hotels </a>  </div>
                                 <div className="widget-posts-descr-score">5.0</div>
-                                <div className="clear-wishlist"><i className="fal fa-times-circle"></i></div>
+                                <div className="clear-wishlist"><i className="fal fa-times-circle"/></div>
                             </div>
                         </li>
                         <li>
@@ -217,10 +283,10 @@ function UserWhishlist(props) {
                             </div>
                             <div className="widget-posts-descr">
                                 <h4><a href="listing-single.html">Rocko Band in Marquee Club</a></h4>
-                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"></i>75 Prince St, NY, USA</a></div>
+                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"/>75 Prince St, NY, USA</a></div>
                                 <div className="widget-posts-descr-link"><a href="listing.html" >Events</a> </div>
                                 <div className="widget-posts-descr-score">4.2</div>
-                                <div className="clear-wishlist"><i className="fal fa-times-circle"></i></div>
+                                <div className="clear-wishlist"><i className="fal fa-times-circle"/></div>
                             </div>
                         </li>
                         <li>
@@ -228,10 +294,10 @@ function UserWhishlist(props) {
                             </div>
                             <div className="widget-posts-descr">
                                 <h4><a href="listing-single.html">Premium Fitness Gym</a></h4>
-                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"></i> W 85th St, New York, USA</a></div>
+                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"/> W 85th St, New York, USA</a></div>
                                 <div className="widget-posts-descr-link"><a href="listing.html" >Fitness</a> <a href="listing.html" >Gym</a> </div>
                                 <div className="widget-posts-descr-score">5.0</div>
-                                <div className="clear-wishlist"><i className="fal fa-times-circle"></i></div>
+                                <div className="clear-wishlist"><i className="fal fa-times-circle"/></div>
                             </div>
                         </li>
                     </ul>
@@ -240,8 +306,8 @@ function UserWhishlist(props) {
             </div>
             {/*  header-modal-container end */}
             <div className="header-modal-top fl-wrap">
-                <h4>Your Wishlist : <span><strong></strong> Locations</span></h4>
-                <div className="close-header-modal"><i className="far fa-times"></i></div>
+                <h4>Your Wishlist : <span><strong/> Locations</span></h4>
+                <div className="close-header-modal"><i className="far fa-times"/></div>
             </div>
         </div>
     );
@@ -250,12 +316,12 @@ function UserWhishlist(props) {
 function GuestHeader(props) {
     return (
         <>
-            <a href="#" className="add-list color-bg">Become Partner <span><i className="fal fa-hands-helping"></i></span></a>
-            <div className="cart-btn   show-header-modal" data-microtip-position="bottom" role="tooltip" aria-label="Your Wishlist"><i className="fal fa-heart"></i><span className="cart-counter green-bg"></span> </div>
-            <div className="show-reg-form modal-open avatar-img" onClick={() => { $('.modal , .reg-overlay').fadeIn(200); $(".modal_main").addClass("vis_mr"); $("html, body").addClass("hid-body"); }} data-srcav={avatar7}><i className="fal fa-user"></i>Sign In</div>
+            <a href="#" className="add-list color-bg">Become Partner <span><i className="fal fa-hands-helping"/></span></a>
+            <div className="cart-btn   show-header-modal" data-microtip-position="bottom" role="tooltip" aria-label="Your Wishlist"><i className="fal fa-heart"/><span className="cart-counter green-bg"/> </div>
+            <div className="show-reg-form modal-open avatar-img" onClick={() => { $('.modal , .reg-overlay').fadeIn(200); $(".modal_main").addClass("vis_mr"); $("html, body").addClass("hid-body"); }} data-srcav={avatar7}><i className="fal fa-user"/>Sign In</div>
             {/*  lang-wrap */}
             <div className="lang-wrap">
-                <div className="show-lang"><span><i className="fal fa-globe-europe"></i><strong>En</strong></span><i className="fa fa-caret-down arrlan"></i></div>
+                <div className="show-lang"><span><i className="fal fa-globe-europe"/><strong>En</strong></span><i className="fa fa-caret-down arrlan"/></div>
                 <ul className="lang-tooltip lang-action no-list-style">
                     <li><a href="#" className="current-lan" data-lantext="En">English</a></li>
                     <li><a href="#" data-lantext="Fr">Français</a></li>
@@ -271,7 +337,7 @@ function GuestWhishlist(props) {
     return (
         <div className="header-modal novis_wishlist">
             {/*  header-modal-container */}
-            <div className="header-modal-container scrollbar-inner fl-wrap" data-simplebar>
+            <div className="header-modal-container scrollbar-inner fl-wrap" data-simplebar="">
                 {/* widget-posts */}
                 <div className="widget-posts  fl-wrap">
                     <ul className="no-list-style">
@@ -280,10 +346,10 @@ function GuestWhishlist(props) {
                             </div>
                             <div className="widget-posts-descr">
                                 <h4><a href="listing-single.html">Rocko Band in Marquee Club</a></h4>
-                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"></i>75 Prince St, NY, USA</a></div>
+                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"/>75 Prince St, NY, USA</a></div>
                                 <div className="widget-posts-descr-link"><a href="listing.html" >Events</a> </div>
                                 <div className="widget-posts-descr-score">4.2</div>
-                                <div className="clear-wishlist"><i className="fal fa-times-circle"></i></div>
+                                <div className="clear-wishlist"><i className="fal fa-times-circle"/></div>
                             </div>
                         </li>
                         <li>
@@ -291,10 +357,10 @@ function GuestWhishlist(props) {
                             </div>
                             <div className="widget-posts-descr">
                                 <h4><a href="listing-single.html">Premium Fitness Gym</a></h4>
-                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"></i> W 85th St, New York, USA</a></div>
+                                <div className="geodir-category-location fl-wrap"><a href="#"><i className="fas fa-map-marker-alt"/> W 85th St, New York, USA</a></div>
                                 <div className="widget-posts-descr-link"><a href="listing.html" >Fitness</a> <a href="listing.html" >Gym</a> </div>
                                 <div className="widget-posts-descr-score">5.0</div>
-                                <div className="clear-wishlist"><i className="fal fa-times-circle"></i></div>
+                                <div className="clear-wishlist"><i className="fal fa-times-circle"/></div>
                             </div>
                         </li>
                     </ul>
@@ -303,8 +369,8 @@ function GuestWhishlist(props) {
             </div>
             {/*  header-modal-container end */}
             <div className="header-modal-top fl-wrap">
-                <h4>Your Wishlist : <span><strong></strong> Locations</span></h4>
-                <div className="close-header-modal"><i className="far fa-times"></i></div>
+                <h4>Your Wishlist : <span><strong/> Locations</span></h4>
+                <div className="close-header-modal"><i className="far fa-times"/></div>
             </div>
         </div>
     );

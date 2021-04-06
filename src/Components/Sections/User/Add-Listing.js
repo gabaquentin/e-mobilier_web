@@ -1,21 +1,14 @@
-import React, { useEffect } from 'react';
-
-import { appendScript } from '../../../Assets/utils/appendScript';
+import React, {useEffect} from 'react';
+import {appendScript} from "../../../Assets/utils/appendScript";
 
 const Add_Listing = () => {
 
     useEffect(() => {
         const appendScripts = () => {
-
-            appendScript("/js/jquery.min.js", false);
-            appendScript("/js/plugins.js", false);
-            appendScript("/js/scripts.js", false);
-            appendScript("https://maps.googleapis.com/maps/api/js?key=AIzaSyDagkUmxY8WQ5Th7zIf12QkqctyvDf6P8k&libraries=places&callback=initAutocomplete", false);
             appendScript("/js/map-add.js", false);
-
-        }
+        };
         appendScripts();
-    }, []);
+    },[]);
 
     return (
         <div className="col-md-9">
@@ -25,8 +18,8 @@ const Add_Listing = () => {
             {/* profile-edit-container*/} 
             <div className="profile-edit-container fl-wrap block_box">
                 <div className="custom-form">
-                    <label>Listing Title <i className="fal fa-briefcase"></i></label>
-                    <input type="text" placeholder="Name of your business" value=""/>
+                    <label>Listing Title <i className="fal fa-briefcase"/></label>
+                    <input type="text" placeholder="Name of your business" defaultValue=""/>
                     <div className="row">
                         <div className="col-md-6">
                             <label>Type / Category</label>
@@ -42,8 +35,8 @@ const Add_Listing = () => {
                             </div>
                         </div>
                         <div className="col-md-6">
-                            <label>Keywords <i className="fal fa-key"></i></label>
-                            <input type="text" placeholder="Maximum 15 , should be separated by commas" value=""/>
+                            <label>Keywords <i className="fal fa-key"/></label>
+                            <input type="text" placeholder="Maximum 15 , should be separated by commas" defaultValue=""/>
                         </div>
                     </div>
                 </div>
@@ -57,16 +50,17 @@ const Add_Listing = () => {
                 <div className="custom-form">
                     <div className="row">
                         <div className="col-md-6">
-                            <label>Longitude (Drag marker on the map)<i className="fal fa-long-arrow-alt-right"></i>  </label>
-                            <input type="text" placeholder="Map Longitude"  id="long" value=""/>                                                
+                            <label>Longitude (Drag marker on the map)<i className="fal fa-long-arrow-alt-right"/>  </label>
+                            <input type="text" placeholder="Map Longitude"  id="long" defaultValue=""/>                                                
                         </div>
                         <div className="col-md-6">
-                            <label>Latitude (Drag marker on the map) <i className="fal fa-long-arrow-alt-down"></i> </label>
-                            <input type="text" placeholder="Map Latitude"  id="lat" value=""/>                                            
+                            <label>Latitude (Drag marker on the map) <i className="fal fa-long-arrow-alt-down"/> </label>
+                            <input type="text" placeholder="Map Latitude"  id="lat" defaultValue=""/>                                            
                         </div>
                     </div>
                     <div className="map-container">
-                        <div id="singleMap" className="drag-map" data-latitude="40.7427837" data-longitude="-73.11445617675781"></div>
+                        <div id="singleMap" className="drag-map" data-latitude="4.188601304297962" data-longitude="11.344511451673648"/>
+                        <div className="location-btn geoLocation tolt" data-microtip-position="top-left" data-tooltip="Your location"><span><i className="fal fa-location"/></span></div>
                     </div>
                     <label>City / Location</label>
                     <div className="listsearch-input-item">
@@ -84,20 +78,20 @@ const Add_Listing = () => {
                     </div>
                     <div className="row">
                         <div className="col-sm-6">
-                            <label>Address<i className="fal fa-map-marker"></i></label>
-                            <input type="text" placeholder="Address of your business" value=""/>                                                
+                            <label>Address<i className="fal fa-map-marker"/></label>
+                            <input type="text" placeholder="Address of your business" defaultValue=""/>                                                
                         </div>
                         <div className="col-sm-6">
-                            <label>Email Address<i className="far fa-envelope"></i>  </label>
-                            <input type="text" placeholder="JessieManrty@domain.com" value=""/> 
+                            <label>Email Address<i className="far fa-envelope"/>  </label>
+                            <input type="text" placeholder="JessieManrty@domain.com" defaultValue=""/> 
                         </div>
                         <div className="col-sm-6">
-                            <label>Phone<i className="far fa-phone"></i>  </label>
-                            <input type="text" placeholder="+7(123)987654" value=""/>                                                
+                            <label>Phone<i className="far fa-phone"/>  </label>
+                            <input type="text" placeholder="+7(123)987654" defaultValue=""/>                                                
                         </div>
                         <div className="col-sm-6">
-                            <label> Website <i className="far fa-globe"></i>  </label>
-                            <input type="text" placeholder="themeforest.net" value=""/>                                                
+                            <label> Website <i className="far fa-globe"/>  </label>
+                            <input type="text" placeholder="themeforest.net" defaultValue=""/>                                                
                         </div>
                     </div>
                 </div>
@@ -114,7 +108,7 @@ const Add_Listing = () => {
                         <div className="col-md-4">
                             <div className="add-list-media-header" style={{marginBottom: '20px'}}>
                                 <label className="radio inline"> 
-                                <input type="radio" name="gender"  checked />
+                                <input type="radio" name="gender"  defaultChecked />
                                 <span>Background image</span> 
                                 </label>
                             </div>
@@ -124,8 +118,8 @@ const Add_Listing = () => {
                                         <div className="fuzone">
                                             <form>
                                                 <div className="fu-text">
-                                                    <span><i className="fal fa-images"></i> Click here or drop files to upload</span>
-                                                    <div className="photoUpload-files fl-wrap"></div>
+                                                    <span><i className="fal fa-images"/> Click here or drop files to upload</span>
+                                                    <div className="photoUpload-files fl-wrap"/>
                                                 </div>
                                                 <input type="file" className="upload" multiple />
                                             </form>
@@ -148,8 +142,8 @@ const Add_Listing = () => {
                                     <div className="fuzone">
                                         <form>
                                             <div className="fu-text">
-                                                <span><i className="fal fa-images"></i> Click here or drop files to upload</span>
-                                                <div className="photoUpload-files fl-wrap"></div>
+                                                <span><i className="fal fa-images"/> Click here or drop files to upload</span>
+                                                <div className="photoUpload-files fl-wrap"/>
                                             </div>
                                             <input type="file" className="upload" multiple />
                                         </form>
@@ -167,10 +161,10 @@ const Add_Listing = () => {
                                 </label>
                             </div>
                             <div className="add-list-media-wrap">
-                                <label>Youtube  <i className="fab fa-youtube"></i></label>
-                                <input type="text" placeholder="https://www.youtube.com/" value=""/>   
-                                <label>Vimeo <i className="fab fa-vimeo-v"></i></label>
-                                <input type="text" placeholder="https://vimeo.com/" value=""/> 
+                                <label>Youtube  <i className="fab fa-youtube"/></label>
+                                <input type="text" placeholder="https://www.youtube.com/" defaultValue=""/>   
+                                <label>Vimeo <i className="fab fa-vimeo-v"/></label>
+                                <input type="text" placeholder="https://vimeo.com/" defaultValue=""/> 
                             </div>
                         </div>
                         {/*col end*/}                                                   
@@ -185,7 +179,7 @@ const Add_Listing = () => {
             <div className="profile-edit-container fl-wrap block_box">
                 <div className="custom-form">
                     <label>Text</label>
-                    <textarea cols="40" rows="3" placeholder="Datails"></textarea> 
+                    <textarea cols="40" rows="3" placeholder="Datails"/>
                 </div>
             </div>
             {/* profile-edit-container end*/}
@@ -198,28 +192,28 @@ const Add_Listing = () => {
                     {/* Checkboxes */}
                     <ul className="fl-wrap filter-tags no-list-style ds-tg">
                         <li>
-                            <input id="check-aaa5" type="checkbox" name="check" checked />
-                            <label for="check-aaa5">Free WiFi</label>
+                            <input id="check-aaa5" type="checkbox" name="check" defaultChecked />
+                            <label form="check-aaa5">Free WiFi</label>
                         </li>
                         <li>
-                            <input id="check-bb5" type="checkbox" name="check" checked />
-                            <label for="check-bb5">Parking</label>
+                            <input id="check-bb5" type="checkbox" name="check" defaultChecked />
+                            <label form="check-bb5">Parking</label>
                         </li>
                         <li>                                       
                             <input id="check-dd5" type="checkbox" name="check" />
-                            <label for="check-dd5">Fitness Center</label>
+                            <label form="check-dd5">Fitness Center</label>
                         </li>
                         <li>                                          
                             <input id="check-cc5" type="checkbox" name="check" />
-                            <label for="check-cc5">Non-smoking Rooms</label>
+                            <label form="check-cc5">Non-smoking Rooms</label>
                         </li>
                         <li>                                       
-                            <input id="check-ff5" type="checkbox" name="check" checked />
-                            <label for="check-ff5">Airport Shuttle</label>
+                            <input id="check-ff5" type="checkbox" name="check" defaultChecked />
+                            <label form="check-ff5">Airport Shuttle</label>
                         </li>
                         <li>                                          
                             <input id="check-c4" type="checkbox" name="check"/>
-                            <label for="check-c4">Air Conditioning</label>
+                            <label form="check-c4">Air Conditioning</label>
                         </li>
                     </ul>
                     {/* Checkboxes end */}
@@ -239,16 +233,16 @@ const Add_Listing = () => {
                                 <div className="act-widget-header">
                                     <h4>1. Promo video</h4>
                                     <div className="onoffswitch">
-                                        <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch5" checked />
-                                        <label className="onoffswitch-label" for="myonoffswitch5">
-                                        <span className="onoffswitch-inner"></span>
-                                        <span className="onoffswitch-switch"></span>
+                                        <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch5" defaultChecked />
+                                        <label className="onoffswitch-label" form="myonoffswitch5">
+                                        <span className="onoffswitch-inner"/>
+                                        <span className="onoffswitch-switch"/>
                                         </label>
                                     </div>
                                 </div>
                                 <div className="add-list-media-wrap">
-                                    <label>Video url :  <i className="fab fa-youtube"></i></label>
-                                    <input type="text" placeholder="https://www.youtube.com/" value=""/>   
+                                    <label>Video url :  <i className="fab fa-youtube"/></label>
+                                    <input type="text" placeholder="https://www.youtube.com/" defaultValue=""/>   
                                 </div>
                             </div>
                             {/* act-widget end*/}
@@ -259,10 +253,10 @@ const Add_Listing = () => {
                                 <div className="act-widget-header">
                                     <h4>2. Gallery Thumbnails</h4>
                                     <div className="onoffswitch">
-                                        <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch6" checked />
-                                        <label className="onoffswitch-label" for="myonoffswitch6">
-                                        <span className="onoffswitch-inner"></span>
-                                        <span className="onoffswitch-switch"></span>
+                                        <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch6" defaultChecked />
+                                        <label className="onoffswitch-label" form="myonoffswitch6">
+                                        <span className="onoffswitch-inner"/>
+                                        <span className="onoffswitch-switch"/>
                                         </label>
                                     </div>
                                 </div>
@@ -271,8 +265,8 @@ const Add_Listing = () => {
                                         <div className="fuzone">
                                             <form>
                                                 <div className="fu-text">
-                                                    <span><i className="fal fa-images"></i> Click here or drop files to upload</span>
-                                                    <div className="photoUpload-files fl-wrap"></div>
+                                                    <span><i className="fal fa-images"/> Click here or drop files to upload</span>
+                                                    <div className="photoUpload-files fl-wrap"/>
                                                 </div>
                                                 <input type="file" className="upload" multiple />
                                             </form>
@@ -289,9 +283,9 @@ const Add_Listing = () => {
                                     <h4>3. Slider</h4>
                                     <div className="onoffswitch">
                                         <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch7" />
-                                        <label className="onoffswitch-label" for="myonoffswitch7">
-                                        <span className="onoffswitch-inner"></span>
-                                        <span className="onoffswitch-switch"></span>
+                                        <label className="onoffswitch-label" form="myonoffswitch7">
+                                        <span className="onoffswitch-inner"/>
+                                        <span className="onoffswitch-switch"/>
                                         </label>
                                     </div>
                                 </div>
@@ -300,8 +294,8 @@ const Add_Listing = () => {
                                         <div className="fuzone">
                                             <form>
                                                 <div className="fu-text">
-                                                    <span><i className="fal fa-images"></i> Click here or drop files to upload</span>
-                                                    <div className="photoUpload-files fl-wrap"></div>
+                                                    <span><i className="fal fa-images"/> Click here or drop files to upload</span>
+                                                    <div className="photoUpload-files fl-wrap"/>
                                                 </div>
                                                 <input type="file" className="upload" multiple />
                                             </form>
@@ -323,32 +317,32 @@ const Add_Listing = () => {
                 <div className="custom-form">
                     <div className="row">
                         <div className="col-sm-4">
-                            <label>Monday <i className="fal fa-clock"></i></label>
-                            <input type="text" placeholder="9 AM - 5 PM" value=""/>
+                            <label>Monday <i className="fal fa-clock"/></label>
+                            <input type="text" placeholder="9 AM - 5 PM" defaultValue=""/>
                         </div>
                         <div className="col-sm-4">
-                            <label>Tuesday <i className="fal fa-clock"></i></label>
-                            <input type="text" placeholder="9 AM - 5 PM" value=""/>
+                            <label>Tuesday <i className="fal fa-clock"/></label>
+                            <input type="text" placeholder="9 AM - 5 PM" defaultValue=""/>
                         </div>
                         <div className="col-sm-4">
-                            <label>Wednesday <i className="fal fa-clock"></i></label>
-                            <input type="text" placeholder="9 AM - 5 PM" value=""/>
+                            <label>Wednesday <i className="fal fa-clock"/></label>
+                            <input type="text" placeholder="9 AM - 5 PM" defaultValue=""/>
                         </div>
                         <div className="col-sm-4">
-                            <label>Thursday <i className="fal fa-clock"></i></label>
-                            <input type="text" placeholder="9 AM - 5 PM" value=""/>
+                            <label>Thursday <i className="fal fa-clock"/></label>
+                            <input type="text" placeholder="9 AM - 5 PM" defaultValue=""/>
                         </div>
                         <div className="col-sm-4">
-                            <label>Friday <i className="fal fa-clock"></i></label>
-                            <input type="text" placeholder="9 AM - 5 PM" value=""/>
+                            <label>Friday <i className="fal fa-clock"/></label>
+                            <input type="text" placeholder="9 AM - 5 PM" defaultValue=""/>
                         </div>
                         <div className="col-sm-4">
-                            <label>Saturday <i className="fal fa-clock"></i></label>
-                            <input type="text" placeholder="9 AM - 3 PM" value=""/>
+                            <label>Saturday <i className="fal fa-clock"/></label>
+                            <input type="text" placeholder="9 AM - 3 PM" defaultValue=""/>
                         </div>
                         <div className="col-sm-4">
-                            <label>Sunday <i className="fal fa-clock"></i></label>
-                            <input type="text" placeholder="Closed" value=""/>
+                            <label>Sunday <i className="fal fa-clock"/></label>
+                            <input type="text" placeholder="Closed" defaultValue=""/>
                         </div>
                     </div>
                 </div>
@@ -365,10 +359,10 @@ const Add_Listing = () => {
                         <div className="act-widget-header">
                             <h4>1. Booking Form</h4>
                             <div className="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch" checked />
-                                <label className="onoffswitch-label" for="myonoffswitch">
-                                <span className="onoffswitch-inner"></span>
-                                <span className="onoffswitch-switch"></span>
+                                <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch" defaultChecked />
+                                <label className="onoffswitch-label" form="myonoffswitch">
+                                <span className="onoffswitch-inner"/>
+                                <span className="onoffswitch-switch"/>
                                 </label>
                             </div>
                         </div>
@@ -380,9 +374,9 @@ const Add_Listing = () => {
                             <h4>2. Price Range </h4>
                             <div className="onoffswitch">
                                 <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch2" />
-                                <label className="onoffswitch-label" for="myonoffswitch2">
-                                <span className="onoffswitch-inner"></span>
-                                <span className="onoffswitch-switch"></span>
+                                <label className="onoffswitch-label" form="myonoffswitch2">
+                                <span className="onoffswitch-inner"/>
+                                <span className="onoffswitch-switch"/>
                                 </label>
                             </div>
                         </div>
@@ -393,15 +387,15 @@ const Add_Listing = () => {
                         <div className="act-widget-header">
                             <h4>3. instagram</h4>
                             <div className="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch3" checked />
-                                <label className="onoffswitch-label" for="myonoffswitch3">
-                                <span className="onoffswitch-inner"></span>
-                                <span className="onoffswitch-switch"></span>
+                                <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch3" defaultChecked />
+                                <label className="onoffswitch-label" form="myonoffswitch3">
+                                <span className="onoffswitch-inner"/>
+                                <span className="onoffswitch-switch"/>
                                 </label>
                             </div>
                         </div>
-                        <label>Api key<i className="fab fa-mixcloud"></i></label>
-                        <input type="text" placeholder="Api key" value=""/> 
+                        <label>Api key<i className="fab fa-mixcloud"/></label>
+                        <input type="text" placeholder="Api key" defaultValue=""/> 
                     </div>
                     {/* act-widget end*/} 
                 </div>
@@ -413,20 +407,20 @@ const Add_Listing = () => {
             {/* profile-edit-container*/} 
             <div className="profile-edit-container fl-wrap block_box">
                 <div className="custom-form">
-                    <label>Facebook <i className="fab fa-facebook"></i></label>
-                    <input type="text" placeholder="https://www.facebook.com/" value=""/>
-                    <label>Twitter<i className="fab fa-twitter"></i>  </label>
-                    <input type="text" placeholder="https://twitter.com/" value=""/>
-                    <label>Vkontakte<i className="fab fa-vk"></i>  </label>
-                    <input type="text" placeholder="https://vk.com" value=""/>
-                    <label> Instagram <i className="fab fa-instagram"></i>  </label>
-                    <input type="text" placeholder="https://www.instagram.com/" value=""/>
-                    <button className="btn    color2-bg  float-btn">Send Listing<i className="fal fa-paper-plane"></i></button>
+                    <label>Facebook <i className="fab fa-facebook"/></label>
+                    <input type="text" placeholder="https://www.facebook.com/" defaultValue=""/>
+                    <label>Twitter<i className="fab fa-twitter"/>  </label>
+                    <input type="text" placeholder="https://twitter.com/" defaultValue=""/>
+                    <label>Vkontakte<i className="fab fa-vk"/>  </label>
+                    <input type="text" placeholder="https://vk.com" defaultValue=""/>
+                    <label> Instagram <i className="fab fa-instagram"/>  </label>
+                    <input type="text" placeholder="https://www.instagram.com/" defaultValue=""/>
+                    <button className="btn    color2-bg  float-btn">Send Listing<i className="fal fa-paper-plane"/></button>
                 </div>
             </div>
             {/* profile-edit-container end*/}                                    
         </div>
     );
-}
+};
 
 export default Add_Listing;

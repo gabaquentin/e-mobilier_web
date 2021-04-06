@@ -1,7 +1,16 @@
+import str from "@rollup/plugin-replace";
+
 export const appendScript = (scriptToAppend, async) => {
     const script = document.createElement("script");
-    script.type = 'text/javascript';
+    script.id = scriptToAppend.replace(/[/]/g, "_").replace(".", "_");
     script.src = scriptToAppend;
     script.async = async;
-    document.body.appendChild(script);
-}
+    const get_script = document.getElementById(scriptToAppend.replace(/[/]/g, "_").replace(".", "_"));
+
+    if(get_script){
+        const parentDiv = get_script.parentNode;
+        parentDiv.replaceChild(script, get_script);
+    }
+    else
+        document.body.appendChild(script);
+};

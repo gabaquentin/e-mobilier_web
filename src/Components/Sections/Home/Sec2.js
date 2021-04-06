@@ -12,7 +12,7 @@ class Sec2 extends Component {
                     <div className="section-title">
                         <h2>Explore Best Cities</h2>
                         <div className="section-subtitle">Catalog of Categories</div>
-                        <span className="section-separator"></span>
+                        <span className="section-separator"/>
                         <p>In ut odio libero, at vulputate urna. Nulla tristique mi a massa convallis cursus.</p>
                     </div>
                     <div className="listing-item-grid_container fl-wrap">
@@ -20,8 +20,8 @@ class Sec2 extends Component {
                             {/* listing-item-grid */}
                             <div className="col-sm-4">
                                 <div className="listing-item-grid">
-                                    <div className="bg" data-bg={all1}></div>
-                                    <div className="d-gr-sec"></div>
+                                    <div className="bg" data-bg={all1}/>
+                                    <div className="d-gr-sec"/>
                                     <div className="listing-counter color2-bg"><span>16 </span> Locations</div>
                                     <div className="listing-item-grid_title">
                                         <h3><a href="listing.html">New York</a></h3>
@@ -33,8 +33,8 @@ class Sec2 extends Component {
                             {/* listing-item-grid */}
                             <div className="col-sm-4">
                                 <div className="listing-item-grid">
-                                    <div className="bg" data-bg={all1}></div>
-                                    <div className="d-gr-sec"></div>
+                                    <div className="bg" data-bg={all1}/>
+                                    <div className="d-gr-sec"/>
                                     <div className="listing-counter color2-bg"><span>22 </span> Locations</div>
                                     <div className="listing-item-grid_title">
                                         <h3><a href="listing.html">Paris</a></h3>
@@ -46,8 +46,8 @@ class Sec2 extends Component {
                             {/* listing-item-grid */}
                             <div className="col-sm-4">
                                 <div className="listing-item-grid">
-                                    <div className="bg" data-bg={all1}></div>
-                                    <div className="d-gr-sec"></div>
+                                    <div className="bg" data-bg={all1}/>
+                                    <div className="d-gr-sec"/>
                                     <div className="listing-counter color2-bg"><span>9 </span> Locations</div>
                                     <div className="listing-item-grid_title">
                                         <h3><a href="listing.html">Moscow</a></h3>
@@ -59,8 +59,8 @@ class Sec2 extends Component {
                             {/* listing-item-grid */}
                             <div className="col-sm-4">
                                 <div className="listing-item-grid">
-                                    <div className="bg" data-bg={all1}></div>
-                                    <div className="d-gr-sec"></div>
+                                    <div className="bg" data-bg={all1}/>
+                                    <div className="d-gr-sec"/>
                                     <div className="listing-counter color2-bg"><span>12 </span> Locations</div>
                                     <div className="listing-item-grid_title">
                                         <h3><a href="listing.html">Rome</a></h3>
@@ -72,8 +72,8 @@ class Sec2 extends Component {
                             {/* listing-item-grid */}
                             <div className="col-sm-8">
                                 <div className="listing-item-grid">
-                                    <div className="bg" data-bg={all1}></div>
-                                    <div className="d-gr-sec"></div>
+                                    <div className="bg" data-bg={all1}/>
+                                    <div className="d-gr-sec"/>
                                     <div className="listing-counter color2-bg"><span>33 </span> Locations</div>
                                     <div className="listing-item-grid_title">
                                         <h3><a href="listing.html">London</a></h3>
@@ -84,7 +84,7 @@ class Sec2 extends Component {
                             {/* listing-item-grid end */}
                         </div>
                     </div>
-                    <a href="listing.html" class="btn dec_btn   color2-bg">View All Cities<i class="fal fa-arrow-alt-right"></i></a>
+                    <a href="listing.html" className="btn dec_btn   color2-bg">View All Cities<i className="fal fa-arrow-alt-right"/></a>
                 </div>
             </section>
         );

@@ -10,8 +10,8 @@ class Sec9 extends Component {
             <section className="gray-bg">
                 <div className="container">
                     <div className="clients-carousel-wrap fl-wrap">
-                        <div className="cc-btn   cc-prev"><i className="fal fa-angle-left"></i></div>
-                        <div className="cc-btn cc-next"><i className="fal fa-angle-right"></i></div>
+                        <div className="cc-btn   cc-prev"><i className="fal fa-angle-left"/></div>
+                        <div className="cc-btn cc-next"><i className="fal fa-angle-right"/></div>
                         <div className="clients-carousel">
                             <div className="swiper-container">
                                 <div className="swiper-wrapper">

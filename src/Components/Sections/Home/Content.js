@@ -18,7 +18,7 @@ class Content extends Component {
                 <Fragment>
                     <Hero />
                     <Sec1 />
-                    <div class="sec-circle fl-wrap"></div>
+                    <div className="sec-circle fl-wrap"/>
                     <Sec2 />
                     <Sec3 />
                     <Sec4 />

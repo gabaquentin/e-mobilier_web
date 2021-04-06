@@ -1,51 +1,35 @@
-import React, { useEffect, Fragment, useContext, useState } from 'react';
-import { UserContext } from "../../Contexts/User/userContext";
-import app from '../../firebase';
+import React from 'react';
 
 import Content from '../Sections/User/Content';
 import 'react-notifications/lib/notifications.css';
 import Base from '../Layouts/Base';
+import Footer from "../Layouts/Footer";
+import AuthForm from "../Layouts/AuthForm";
 
 const User = () => {
-    const [unreadMessages, setUnreadMessages] = useState('');
-    const [state, dispatch] = useContext(UserContext);
-
-    useEffect(() => {
-        const fetchChat = async () => {
-            if (state.user.uid) {
-                const db = app.firestore()
-                const chatsRef = db.collection('Chats');
-                const snapshot = await chatsRef.where('Users', 'array-contains-any', [state.user.uid]).get();
-                if (snapshot.empty) {
-                    setUnreadMessages(0);
-                    return;
-                }
-                let tempUnread = 0;
-                snapshot.forEach(doc => {
-                    let position = 0;
-
-                    if (doc.data().Unreads[0].Id == state.user.uid) {
-                        position = 0;
-                    }
-                    else {
-                        position = 1;
-                    }
-
-                    if (doc.data().Unreads[position].Value != 0) {
-                        tempUnread += doc.data().Unreads[position].Value;
-                    }
-                });
-                setUnreadMessages(tempUnread);
-            }
-        }
-        fetchChat();
-    }, [])
 
     return (
-        <Base>
-            <Content unreadMessages={unreadMessages} />
-        </Base>
+        <>
+            <Base>
+                <Content />
+            </Base>
+            <Footer />
+            <div className="map-modal-wrap">
+                <div className="map-modal-wrap-overlay"/>
+                <div className="map-modal-item">
+                    <div className="map-modal-container fl-wrap">
+                        <div className="map-modal fl-wrap">
+                            <div id="singleMap" data-latitude="40.7" data-longitude="-73.1"/>
+                        </div>
+                        <h3><span>Location for : </span><a href="#">Listing Title</a></h3>
+                        <div className="map-modal-close"><i className="fal fa-times"/></div>
+                    </div>
+                </div>
+            </div>
+            <AuthForm />
+            <a className="to-top"><i className="fas fa-caret-up"/></a>
+        </>
     );
-}
+};
 
 export default User;

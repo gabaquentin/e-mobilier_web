@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-
-import { appendScript } from '../../../Assets/utils/appendScript';
+import React from 'react';
 
 import avatar1 from '../../../Assets/images/avatar/1.jpg';
 
@@ -17,8 +15,8 @@ const Booking = () => {
                                 <div className="booking-list">
                     <div className="booking-list-message">
                         <div className="booking-list-contr">
-                            <a href="#" className="green-bg tolt" data-microtip-position="left" data-tooltip="Approve"><i className="fal fa-check"></i></a>
-                            <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Cancel"><i className="fal fa-trash"></i></a>
+                            <a href="#" className="green-bg tolt" data-microtip-position="left" data-tooltip="Approve"><i className="fal fa-check"/></a>
+                            <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Cancel"><i className="fal fa-trash"/></a>
                         </div>
                         <div className="booking-list-message-avatar">
                             <img src={avatar1} alt="" />
@@ -50,7 +48,7 @@ const Booking = () => {
                                     <span className="booking-title">Payment State :</span>
                                     <span className="booking-text"> <strong className="done-paid">Paid  </strong>  using Paypal</span>
                                 </div>
-                                <span className="fw-separator"></span>
+                                <span className="fw-separator"/>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere convallis purus non cursus. Cras metus neque, gravida sodales massa ut. </p>
                             </div>
                         </div>
@@ -64,8 +62,8 @@ const Booking = () => {
                                 <div className="booking-list">
                         <div className="booking-list-message">
                             <div className="booking-list-contr">
-                                <a href="#" className="green-bg tolt" data-microtip-position="left" data-tooltip="Approve"><i className="fal fa-check"></i></a>
-                                <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Cancel"><i className="fal fa-trash"></i></a>
+                                <a href="#" className="green-bg tolt" data-microtip-position="left" data-tooltip="Approve"><i className="fal fa-check"/></a>
+                                <a href="#" className="color-bg tolt" data-microtip-position="left" data-tooltip="Cancel"><i className="fal fa-trash"/></a>
                             </div>
                             <div className="booking-list-message-avatar">
                                 <img src={avatar1} alt="" />
@@ -92,7 +90,7 @@ const Booking = () => {
                                         <span className="booking-title">Phone :</span>
                                         <span className="booking-text"><a href="tel:+496170961709" target="_top">+496170961709</a></span>
                                     </div>
-                                    <span className="fw-separator"></span>
+                                    <span className="fw-separator"/>
                                     <p> Nunc posuere convallis purus non cursus. Cras metus neque, gravida sodales massa ut. </p>
                                 </div>
                             </div>
@@ -101,16 +99,16 @@ const Booking = () => {
                             </div>
                     {/* profile-edit-container end*/}
                             <div className="pagination">
-                        <a href="#" className="prevposts-link"><i className="fas fa-caret-left"></i><span>Prev</span></a>
+                        <a href="#" className="prevposts-link"><i className="fas fa-caret-left"/><span>Prev</span></a>
                         <a href="#">1</a>
                         <a href="#" className="current-page">2</a>
                         <a href="#">3</a>
                         <a href="#">...</a>
                         <a href="#">7</a>
-                        <a href="#" className="nextposts-link"><span>Next</span><i className="fas fa-caret-right"></i></a>
+                        <a href="#" className="nextposts-link"><span>Next</span><i className="fas fa-caret-right"/></a>
                     </div>
                 </div>
     );
-}
+};
 
 export default Booking;

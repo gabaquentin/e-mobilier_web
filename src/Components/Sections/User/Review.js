@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react';
-
-import { appendScript } from '../../../Assets/utils/appendScript';
+import React from 'react';
 
 import avatar1 from '../../../Assets/images/avatar/1.jpg';
 import all1 from '../../../Assets/images/all/1.jpg';
@@ -24,13 +22,13 @@ const Review = () => {
                                 <h4><a href="#">Liza Rose</a></h4>
                                 <div className="review-score-user">
                                     <span className="review-score-user_item">4.2</span>
-                                    <div className="listing-rating card-popup-rainingvis" data-starrating2="4"></div>
+                                    <div className="listing-rating card-popup-rainingvis" data-starrating2="4"/>
                                 </div>
                             </div>
                             <p>" Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. "</p>
                             <div className="reviews-comments-item-footer fl-wrap">
-                                <div className="reviews-comments-item-date"><span><i className="far fa-calendar-check"></i>12 April 2018</span></div>
-                                <a href="#" className="rate-review"><i className="fal fa-reply"></i>  Reply </a>
+                                <div className="reviews-comments-item-date"><span><i className="far fa-calendar-check"/>12 April 2018</span></div>
+                                <a href="#" className="rate-review"><i className="fal fa-reply"/>  Reply </a>
                             </div>
                         </div>
                     </div>
@@ -45,7 +43,7 @@ const Review = () => {
                                     <h4><a href="#">Adam Koncy</a></h4>
                                     <div className="review-score-user">
                                         <span className="review-score-user_item">5.0</span>
-                                        <div className="listing-rating card-popup-rainingvis" data-starrating2="5"></div>
+                                        <div className="listing-rating card-popup-rainingvis" data-starrating2="5"/>
                                     </div>
                                 </div>
                                 <p>" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere convallis purus non cursus. Cras metus neque, gravida sodales massa ut. "</p>
@@ -54,8 +52,8 @@ const Review = () => {
                                         <a href={all1} className="image-popup"><img src={all1} alt="" /></a>
                                         </div>
                                         <div className="reviews-comments-item-footer fl-wrap">
-                                            <div className="reviews-comments-item-date"><span><i className="far fa-calendar-check"></i>03 December 2017</span></div>
-                                            <a href="#" className="rate-review"><i className="fal fa-reply"></i>  Reply </a>
+                                            <div className="reviews-comments-item-date"><span><i className="far fa-calendar-check"/>03 December 2017</span></div>
+                                            <a href="#" className="rate-review"><i className="fal fa-reply"/>  Reply </a>
                                         </div>
                                     </div>
                                 </div>
@@ -70,13 +68,13 @@ const Review = () => {
                                                 <h4><a href="#">Anna Dorenn </a></h4>
                                                 <div className="review-score-user">
                                                     <span className="review-score-user_item">4.8</span>
-                                                    <div className="listing-rating card-popup-rainingvis" data-starrating2="5"></div>
+                                                    <div className="listing-rating card-popup-rainingvis" data-starrating2="5"/>
                                                 </div>
                                             </div>
                                             <p>" Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. "</p>
                                             <div className="reviews-comments-item-footer fl-wrap">
-                                                <div className="reviews-comments-item-date"><span><i className="far fa-calendar-check"></i>12 April 2018</span></div>
-                                                <a href="#" className="rate-review"><i className="fal fa-reply"></i>  Reply </a>
+                                                <div className="reviews-comments-item-date"><span><i className="far fa-calendar-check"/>12 April 2018</span></div>
+                                                <a href="#" className="rate-review"><i className="fal fa-reply"/>  Reply </a>
                                             </div>
                                         </div>
                                     </div>
@@ -84,16 +82,16 @@ const Review = () => {
                             </div>
                                 {/* profile-edit-container end*/}
                             <div className="pagination">
-                                    <a href="#" className="prevposts-link"><i className="fas fa-caret-left"></i><span>Prev</span></a>
+                                    <a href="#" className="prevposts-link"><i className="fas fa-caret-left"/><span>Prev</span></a>
                                     <a href="#">1</a>
                                     <a href="#" className="current-page">2</a>
                                     <a href="#">3</a>
                                     <a href="#">...</a>
                                     <a href="#">7</a>
-                                    <a href="#" className="nextposts-link"><span>Next</span><i className="fas fa-caret-right"></i></a>
+                                    <a href="#" className="nextposts-link"><span>Next</span><i className="fas fa-caret-right"/></a>
                                 </div>
                             </div>
     );
-}
+};
 
 export default Review;

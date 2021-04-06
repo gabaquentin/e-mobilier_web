@@ -334,7 +334,7 @@ function initApp() {
     });
     function initHiddenGal() {
         $(".dynamic-gal").on('click', function () {
-            var dynamicgal = eval($(this).attr("data-dynamicPath"));
+            var dynamicgal = eval($(this).attr("data-dynamicpath"));
             $(this).lightGallery({
                 dynamic: true,
                 dynamicEl: dynamicgal,
@@ -346,7 +346,7 @@ function initApp() {
         });
     }
     initHiddenGal();
-    $("<span class='footer-bg-pin'></span>").duplicate(4).prependTo(".footer-bg");
+    $("<span class='footer-bg-pin'/>").duplicate(4).prependTo(".footer-bg");
     function heroAnim() {
         function a(a) {
             var b = a.length,
@@ -363,7 +363,7 @@ function initApp() {
         var b = $(".footer-bg-pin");
         $(a(b).slice(0, $(".footer-bg").data("ran"))).each(function (a) {
             var bc = $(this);
-            b.removeClass("footer-bg-pin-vis")
+            b.removeClass("footer-bg-pin-vis");
             bc.addClass("footer-bg-pin-vis");
 
         });
@@ -1242,7 +1242,5 @@ $(".romms-select_header").on("click", function () {
 });
 
 //   Init All ------------------
-$(document).ready(function () {
     initApp();
     initparallax();
-});

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { AuthProvider } from "../../../Contexts/AuthContext"
 import Hero from './Hero';
 import Sec1 from './Sec1';
@@ -8,11 +8,11 @@ const Content = (props) => {
         <AuthProvider>
             <Fragment>
                 <Hero user={props.user} state={props.state} dispatch={props.dispatch}/>
-                <Sec1 unreadMessages={props.unreadMessages} user={props.user} state={props.state} dispatch={props.dispatch}/>
-                <div class="limit-box fl-wrap"></div>
+                <Sec1 user={props.user} state={props.state} dispatch={props.dispatch}/>
+                <div className="limit-box fl-wrap"/>
             </Fragment >
         </AuthProvider>
     );
-}
+};
 
 export default Content;

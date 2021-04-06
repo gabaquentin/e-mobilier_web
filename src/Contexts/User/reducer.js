@@ -10,7 +10,7 @@ export const Reducer = (state, action) => {
                 ...state,
                 active: true,
                 user: currentUser
-            }
+            };
         case "disconnected":
             logout();
             history.push('/');
@@ -18,12 +18,12 @@ export const Reducer = (state, action) => {
                 ...state,
                 active: false,
                 user: []
-            }
+            };
 
         default:
             return state
     }
-}
+};
 
 export const InitialState = () => {
     const { currentUser } = useAuth();
@@ -40,4 +40,4 @@ export const InitialState = () => {
         };
     }
 
-}
+};

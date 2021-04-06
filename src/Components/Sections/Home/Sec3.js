@@ -8,10 +8,10 @@ class Sec3 extends Component {
 
         return (
             <section className="parallax-section small-par" data-scrollax-parent="true">
-                <div className="bg par-elem " data-bg={bg1} data-scrollax="properties: { translateY: '30%' }"></div>
-                <div className="overlay  op7"></div>
+                <div className="bg par-elem " data-bg={bg1} data-scrollax="properties: { translateY: '30%' }"/>
+                <div className="overlay  op7"/>
                 <div className="container">
-                    <div class=" single-facts single-facts_2 fl-wrap">
+                    <div className=" single-facts single-facts_2 fl-wrap">
                         {/* inline-facts */}
                         <div className="inline-facts-wrap">
                             <div className="inline-facts">
