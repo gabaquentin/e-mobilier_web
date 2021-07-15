@@ -6,7 +6,7 @@ const Services = () => {
 
 <>
     {/* accordion*/}
-    <div class="accordion mar-top" id="sec5">
+            <div class="accordion mar-top" id="services">
         <a class="toggle act-accordion" href="#"> Crossfit<span/></a>
         <div class="accordion-inner visible">
             <h4 class="simple-title">The Trend in Web Design <span>By David Gray</span></h4>

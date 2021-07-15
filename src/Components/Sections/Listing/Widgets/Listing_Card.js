@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { appendScript } from "../../../../Assets/utils/appendScript";
 import {Link} from "react-router-dom";
 
 const Listing_Card = (props) => {
+    useEffect(() => {
+        const lightGalleryScript = () => {
+            appendScript("https://cdnjs.cloudflare.com/ajax/libs/lightgallery/1.3.2/js/lightgallery.js", false);
+        };
+        lightGalleryScript();
+    });
     const idTag = "#"+props.id;
     return (
     <div className="listing-item" >

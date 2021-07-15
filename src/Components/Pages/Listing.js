@@ -4,7 +4,6 @@ import Content from '../Sections/Listing/Content';
 import 'react-notifications/lib/notifications.css';
 import Base from '../Layouts/Base';
 import {appendScript} from "../../Assets/utils/appendScript";
-import Footer from "../Layouts/Footer";
 import AuthForm from "../Layouts/AuthForm";
 
 const Listing = () => {

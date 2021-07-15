@@ -4,7 +4,7 @@ const SubFooter = () => {
 
     return (
 
-    <div className="sub-footer  fl-wrap">
+    <div className="sub-footer  fl-wrap" style={{ position: "absolute", bottom:0 }}>
         <div className="container">
             <div className="copyright"> &#169; Townhub 2019 . All rights reserved.</div>
             <div className="lang-wrap">

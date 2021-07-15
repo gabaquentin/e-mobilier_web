@@ -9,7 +9,7 @@ const Review = () => {
 
         <>
             {/* list-single-main-item */}
-            <div class="list-single-main-item fl-wrap block_box" id="sec6">
+            <div class="list-single-main-item fl-wrap block_box" id="reviews">
                 <div class="list-single-main-item-title">
                     <h3>Item Reviews -  <span> 2 </span></h3>
                 </div>

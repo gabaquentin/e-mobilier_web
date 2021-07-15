@@ -28,7 +28,6 @@ import Listing_Single from "./Components/Pages/Listing_Single";
 import Author_Single from "./Components/Pages/Author_Single";
 
 const  App = () => {
-    const [pathname, setPathname] = useState("/");
 
     useEffect(() => {
         const appendScripts = () => {
@@ -50,7 +49,10 @@ const  App = () => {
                                     <Switch>
                                         <Route exact path="/" component={Home} />
                                         <Route exact path="/listing" component={Listing} />
-                                        <Route exact path="/listing-single" component={Listing_Single} />
+
+                                        <Route exact path="/listing-single/:Id/:Mode" component={Listing_Single} />
+                                        <Route exact path="/listing-single/:Id" component={Listing_Single} />
+
                                         <Route exact path="/author-single" component={Author_Single} />
                                         <PrivateRoute exact path="/user" component={User} />
                                         <Route component={NotFound} />

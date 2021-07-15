@@ -6,7 +6,7 @@ const Trainer = () => {
 
     return (
 
-        <div className="list-single-main-item fl-wrap block_box" id="sec2">
+        <div className="list-single-main-item fl-wrap block_box" id="trainers">
             <div className="list-single-main-item-title">
                 <h3>Our Trainers</h3>
             </div>

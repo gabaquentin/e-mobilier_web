@@ -10,7 +10,7 @@ import PhoneInput from 'react-phone-number-input';
 import Swal from 'sweetalert2';
 
 import { isValidPhoneNumber } from 'react-phone-number-input';
-import {appendScript} from "../../../Assets/utils/appendScript";
+import {CircularProgress} from "@material-ui/core";
 
 const Profile = (props) => {
 
@@ -25,13 +25,6 @@ const Profile = (props) => {
     const addressRef = useRef();
     const aboutRef = useRef();
     const avatarRef = useRef();
-
-    useEffect(() => {
-        const appendScripts = () => {
-            appendScript("/js/scripts.js", false);
-        };
-        appendScripts();
-    },[]);
 
     function uploadAvatar(storageRef, child, db) {
         storageRef = app.storage().ref();
@@ -71,7 +64,7 @@ const Profile = (props) => {
                 autocapitalize: 'off',
                 autocorrect: 'off'
             }
-        })
+        });
 
         if (password) {
             await reauthenticate(password).then(function () {
@@ -90,21 +83,28 @@ const Profile = (props) => {
     }
 
     function updateProfile(db) {
-
+        let phone1 ="";
+        if(!phone){
+            phone1 = props.user.Phone;
+            console.log("not exist")
+        }
+        else{
+            phone1 = phone;
+        }
         db.collection('Users').doc(props.state.user.uid).update({
             First_Name: first_nameRef.current.value,
             displayName: last_nameRef.current.value,
-            Phone: phone,
+            Phone: phone1,
             Address: addressRef.current.value,
             About: aboutRef.current.value,
             Email: emailRef.current.value
         });
         currentUser.updateProfile({
             displayName: last_nameRef.current.value,
-            phoneNumber: phone,
+            phoneNumber: phone1,
             email: emailRef.current.value,
             photoURL: downloadUrl
-        })
+        });
         
         NotificationManager.info('Your profile up to date');
         setModify(false);
@@ -114,9 +114,17 @@ const Profile = (props) => {
 
     function editProfile(e) {
         e.preventDefault();
+        let phone1 = "";
         try {
             setdisabled(true);
-            if (first_nameRef.current.value === props.user.First_Name && last_nameRef.current.value === props.user.displayName && emailRef.current.value === props.user.Email && addressRef.current.value === props.user.Address && aboutRef.current.value === props.user.About && phone === props.user.Phone && !document.getElementById('avatar-input').files[0]) {
+            if(!phone){
+                phone1 = props.user.Phone;
+                console.log("not exist")
+            }
+            else{
+                phone1 = phone;
+            }
+            if (first_nameRef.current.value === props.user.First_Name && last_nameRef.current.value === props.user.displayName && emailRef.current.value === props.user.Email && addressRef.current.value === props.user.Address && aboutRef.current.value === props.user.About && phone1 === props.user.Phone && !document.getElementById('avatar-input').files[0]) {
                 NotificationManager.info('Nothing to update');
                 setModify(false);
                 setdisabled(false);
@@ -126,7 +134,7 @@ const Profile = (props) => {
                 let child = "";
                 const promises = [];
 
-                if (isValidPhoneNumber(phone)) {
+                if (isValidPhoneNumber(phone1)) {
                     if (emailRef.current.value !== props.user.Email) {
                         promises.push(changeEmai(db));
                     }
@@ -158,98 +166,111 @@ const Profile = (props) => {
 
     return (
         <div className="col-md-9">
-            <div className="dashboard-title fl-wrap" style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-                <h3 style={{ width: '10em', marginTop: '1em', marginRight: '1em' }}>Your Profile</h3>
-                <div className="custom-form">
-                    {modify ? <button className="btn  color2-bg  float-btn " disabled={disabled} onClick={editProfile}>Save Changes<i className="fal fa-save"/></button> : <button className="btn  color2-bg  float-btn " onClick={() => { setModify(true) }}>Enable<i className="fal fa-edit"/></button>}
-                </div>
-            </div>
-            {/* profile-edit-container*/}
-            <div className="profile-edit-container fl-wrap block_box">
-                <div className="custom-form">
-                    <div className="row">
-                        <div className="col-sm-6">
-                            <label>First Name <i className="fal fa-user"/></label>
-                            {modify ? <input type="text" style={{ borderColor: '#5ECEB1' }} placeholder="Fisrt Name" defaultValue={props.user.First_Name} ref={first_nameRef} />
-
-                                    : <input disabled style={{ borderColor: '#CF382D' }} type="text" placeholder="Fisrt Name" defaultValue={props.user.First_Name} />
-                            }
-                        </div>
-                        <div className="col-sm-6">
-                            <label>Last Name <i className="fal fa-user"/></label>
-                            {modify ? <input type="text" style={{ borderColor: '#5ECEB1' }} placeholder="Last Name" defaultValue={props.user.displayName} ref={last_nameRef} />
-
-                                    : <input disabled style={{ borderColor: '#CF382D' }} type="text" placeholder="Last Name" defaultValue={props.user.displayName}  />
-                            }
-                        </div>
-                        <div className="col-sm-6">
-                            <label>Email Address<i className="far fa-envelope"/>  </label>
-                            {modify ? <input type="email" style={{ borderColor: '#5ECEB1' }} placeholder="Email" defaultValue={props.user.Email} ref={emailRef} />
-
-                                    : <input disabled style={{ borderColor: '#CF382D' }} type="email" placeholder="Email" defaultValue={props.user.Email} />
-                            }
-                        </div>
-                        <div className="col-sm-6">
-                            <label>Phone </label>
-                            {modify ? <PhoneInput style={{ borderColor: '#5ECEB1' }} id="phone-register-input" placeholder="Enter phone number" value={phone} onChange={setPhone} />
-
-                                    : <PhoneInput disabled style={{ borderColor: '#CF382D'}} id="phone-register-input" placeholder="Enter phone number" value={phone} readOnly />
-                            }
-                        </div>
-                        <div className="col-sm-6">
-                            <label> Address <i className="fas fa-map-marker"/>  </label>
-                            {modify ? <input type="text" style={{ borderColor: '#5ECEB1' }} placeholder="Cameroon,Yaounde Biyem-Assi Lycee" defaultValue={props.user.Address} ref={addressRef} />
-
-                                    : <input disabled style={{ borderColor: '#CF382D' }} type="text" placeholder="Cameroon,Yaounde Biyem-Assi Lycee" defaultValue={props.user.Address}/>
-                            }
-                        </div>
-
-                    </div>
-                    <label> Notes</label>
-                    {modify ? <textarea cols="40" rows="3" placeholder="About Me" style={{
-    marginBottom: '20px',
-    borderColor: '#5ECEB1'
-}} defaultValue={props.user.About} ref={aboutRef} />
-
-                            : <textarea disabled cols="40" rows="3" placeholder="About Me" style={{
-    marginBottom: '20px',
-    borderColor: '#CF382D'
-}} defaultValue={props.user.About}/>
-                    }
-                    <div className="clearfix"/>
-                    <label>Change Avatar</label>
-                    <div className="clearfix"/>
-                    <div className="listsearch-input-item fl-wrap">
-                        {modify ? (
-                            <div className="fuzone" style={{ borderColor: '#5ECEB1' }}>
-                                <form id="avatar-form">
-                                    <div className="fu-text">
-                                        <span><i className="fal fa-images"/> Click here or drop files to upload</span>
-                                        <div className="photoUpload-files fl-wrap"/>
-                                    </div>
-                                    <input type="file" className="upload" accept="image/x-png,image/gif,image/jpeg" id="avatar-input"/>
-                                </form>
+            {props.user
+                ?
+                    <>
+                        <div className="dashboard-title fl-wrap" style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+                            <h3 style={{ width: '10em', marginTop: '1em', marginRight: '1em' }}>Your Profile</h3>
+                            <div className="custom-form">
+                                {modify ? <button className="btn  color2-bg  float-btn " disabled={disabled} onClick={editProfile}>Save Changes<i className="fal fa-save"/></button> : <button className="btn  color2-bg  float-btn " onClick={() => { setModify(true) }}>Enable<i className="fal fa-edit"/></button>}
                             </div>
-                        )
+                        </div>
+                        {/* profile-edit-container*/}
+                        <div className="profile-edit-container fl-wrap block_box">
+                            <div className="custom-form">
+                                <div className="row">
+                                    <div className="col-sm-6">
+                                        <label>First Name <i className="fal fa-user"/></label>
+                                        {modify ? <input type="text" style={{ borderColor: '#5ECEB1' }} placeholder="Fisrt Name" defaultValue={props.user.First_Name} ref={first_nameRef} />
 
-                            : (
-                                <div className="fuzone" style={{ borderColor: '#CF382D' }}>
-                                    <form >
-                                        <div className="fu-text">
-                                            <span><i className="fal fa-arrow-up"/> You need to enable editing to upload file</span>
-                                            <div className="photoUpload-files fl-wrap"/>
-                                        </div>
-                                         <input disabled type="file" className="upload" ref={avatarRef} />
-                                    </form>
+                                            : <input disabled style={{ borderColor: '#CF382D' }} type="text" placeholder="Fisrt Name" defaultValue={props.user.First_Name} />
+                                        }
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <label>Last Name <i className="fal fa-user"/></label>
+                                        {modify ? <input type="text" style={{ borderColor: '#5ECEB1' }} placeholder="Last Name" defaultValue={props.user.displayName} ref={last_nameRef} />
+
+                                            : <input disabled style={{ borderColor: '#CF382D' }} type="text" placeholder="Last Name" defaultValue={props.user.displayName}  />
+                                        }
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <label>Email Address<i className="far fa-envelope"/>  </label>
+                                        {modify ? <input type="email" style={{ borderColor: '#5ECEB1' }} placeholder="Email" defaultValue={props.user.Email} ref={emailRef} />
+
+                                            : <input disabled style={{ borderColor: '#CF382D' }} type="email" placeholder="Email" defaultValue={props.user.Email} />
+                                        }
+                                    </div>
+                                    <div className="col-sm-6">
+                                        {modify ? <><label>Phone </label><PhoneInput style={{ borderColor: '#5ECEB1' }} id="phone-register-input" placeholder="Enter phone number" value={props.user.Phone} onChange={setPhone} /></>
+
+                                            : <><label>Phone <i className="fal fa-phone"/> </label><input disabled style={{ borderColor: '#CF382D' }} type="text" placeholder="Phone" defaultValue={props.user.Phone} /></>
+                                        }
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <label> Address <i className="fas fa-map-marker"/>  </label>
+                                        {modify ? <input type="text" style={{ borderColor: '#5ECEB1' }} placeholder="Cameroon,Yaounde Biyem-Assi Lycee" defaultValue={props.user.Address} ref={addressRef} />
+
+                                            : <input disabled style={{ borderColor: '#CF382D' }} type="text" placeholder="Cameroon,Yaounde Biyem-Assi Lycee" defaultValue={props.user.Address}/>
+                                        }
+                                    </div>
+
                                 </div>
-                            )
-                        }
-                        
+                                <label> Notes</label>
+                                {modify ? <textarea cols="40" rows="3" placeholder="About Me" style={{
+                                        marginBottom: '20px',
+                                        borderColor: '#5ECEB1'
+                                    }} defaultValue={props.user.About} ref={aboutRef} />
+
+                                    : <textarea disabled cols="40" rows="3" placeholder="About Me" style={{
+                                        marginBottom: '20px',
+                                        borderColor: '#CF382D'
+                                    }} defaultValue={props.user.About}/>
+                                }
+                                <div className="clearfix"/>
+                                <label>Change Avatar</label>
+                                <div className="clearfix"/>
+                                <div className="listsearch-input-item fl-wrap">
+                                    {modify ? (
+                                            <div className="fuzone" style={{ borderColor: '#5ECEB1' }}>
+                                                <form id="avatar-form">
+                                                    <div className="fu-text">
+                                                        <span><i className="fal fa-images"/> Click here or drop files to upload</span>
+                                                        <div className="photoUpload-files fl-wrap"/>
+                                                    </div>
+                                                    <input type="file" className="upload" accept="image/x-png,image/gif,image/jpeg" id="avatar-input"/>
+                                                </form>
+                                            </div>
+                                        )
+
+                                        : (
+                                            <div className="fuzone" style={{ borderColor: '#CF382D' }}>
+                                                <form >
+                                                    <div className="fu-text">
+                                                        <span><i className="fal fa-arrow-up"/> You need to enable editing to upload file</span>
+                                                        <div className="photoUpload-files fl-wrap"/>
+                                                    </div>
+                                                    <input disabled type="file" className="upload" ref={avatarRef} />
+                                                </form>
+                                            </div>
+                                        )
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        {/* profile-edit-container end*/}
+                    </>
+                :
+                <div className="profile-edit-container fl-wrap block_box">
+                    <div className="custom-form">
+                        <div className="row">
+                            <CircularProgress />
+                        </div>
                     </div>
                 </div>
-            </div>
-                {/* profile-edit-container end*/}
+            }
         </div>
+
     );
 };
 

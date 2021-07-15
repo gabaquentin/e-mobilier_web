@@ -6,7 +6,7 @@ const Gallery = () => {
 
     return (
 
-        <div className="list-single-main-item fl-wrap block_box" id="sec4">
+        <div className="list-single-main-item fl-wrap block_box" id="gallery">
             <div className="list-single-main-item-title">
                 <h3>Gallery / Photos</h3>
             </div>

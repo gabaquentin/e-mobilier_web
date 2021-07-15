@@ -43,7 +43,23 @@ const Sec4 = (props) => {
                     {/*  gallery-item */}
                     <div className="gallery-item restaurant fitness">
                         {/* listing-item   */}
-                        <Listing_Card owner={owner} status={"1"} score={"2.8"} reviews={"15"} image={all1} name={"Luxary Resaturant"} verified={true} address={"27th Brooklyn New York, USA"} description={"Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales."} category={"Restaurants"} map={false} price={price} facilities={facilities} location={location} types={"hotels restaurant"} id={"id1"} />
+                        <Listing_Card
+                            owner={owner}
+                            status={"1"}
+                            score={"2.8"}
+                            reviews={"15"}
+                            image={all1}
+                            name={"Luxary Resaturant"}
+                            verified={true}
+                            address={"27th Brooklyn New York, USA"}
+                            description={"Sed interdum metus at nisi tempor laoreet. Integer gravida orci a justo sodales."}
+                            category={"Restaurants"}
+                            map={false} price={price}
+                            facilities={facilities}
+                            location={location}
+                            types={"hotels restaurant"}
+                            id={"id1"}
+                        />
                         {/* listing-item end  */}
                     </div>
                     {/* gallery-item  end */}

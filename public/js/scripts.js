@@ -922,7 +922,6 @@ function initApp() {
     $(".url_btn").on("click", function (e) {
         e.preventDefault();
     });
-    $('.chosen-select').niceSelect();
     // rangeslider -----------------
     $(".range-slider").ionRangeSlider({
         type: "double",
@@ -1207,6 +1206,7 @@ function initAutocomplete() {
         autocomplete.inputId = acInputs[i].id;
     }
 }
+initAutocomplete();
 //  listing height -----------------
 $(".dasboard-menu-btn").on("click", function () {
     $(".dasboard-menu-wrap").slideToggle(500);
@@ -1242,5 +1242,7 @@ $(".romms-select_header").on("click", function () {
 });
 
 //   Init All ------------------
+$(document).ready(function() {
     initApp();
     initparallax();
+});

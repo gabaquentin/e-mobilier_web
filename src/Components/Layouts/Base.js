@@ -7,38 +7,60 @@ import app from '../../firebase';
 import 'react-notifications/lib/notifications.css';
 import { NotificationManager } from 'react-notifications';
 import 'react-notifications/lib/notifications.css';
-import {appendScript} from "../../Assets/utils/appendScript";
+import { appendScript } from "../../Assets/utils/appendScript";
+
+import { getUserByEmail } from '../../Contexts/User/services';
 
 const Base = (props) => {
     const [state, dispatch] = useContext(UserContext);
     const [user, setUser] = useState({});
 
+    const [error, setError] = useState();
+    const [infos, setInfos] = useState();
+
+    useEffect(() => {
+        if (error) {
+            NotificationManager.error(error.message, error.title);
+        }
+    }, [error, setError]);
+
+    useEffect(() => {
+        if (infos) {
+            NotificationManager.infos(infos.message, infos.title);
+        }
+    }, [infos, setInfos]);
+
     useEffect(() => {
         const appendScripts = () => {
             appendScript("/js/scripts.js", false);
+            const url = window.location.href;
+            let current = (new URL(url));
+            const pathname = current.pathname;
+            if(pathname !== '/user')
+                appendScript("/js/niceSelect.js", false);
         };
         appendScripts();
     },[]);
 
     useEffect(() => {
-        const fetchUser = async () => {
-            if (state.user.email) {
-                const db = app.firestore();
-                const userRef = db.collection('Users');
-                const snapshot = await userRef.where('Email', '==', state.user.email).get();
-                if (snapshot.empty) {
-                    NotificationManager.error('Verify your connection');
-                    return;
-                }
+        const fetchUser = () => {
+        if (state.user.email) {
+            getUserByEmail(state.user.email).then(
+                function (user) {
+                    if (user.empty) {
+                        fetchUser();
+                    }
 
-                snapshot.forEach(doc => {
-                    setUser(doc.data())
-                });
+                    user.forEach(doc => {
+                        setUser(doc.data());
+                    });
+                },
+                function (error) { setError({ error: true, message: 'please refresh page', title: 'no user error' }) }
+            );
             }
-
         };
-        fetchUser()
-    },[state]);
+        fetchUser();
+    }, [state]);
 
     return (
         <Fragment>

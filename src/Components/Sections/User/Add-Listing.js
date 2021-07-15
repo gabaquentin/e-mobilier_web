@@ -1,424 +1,303 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {appendScript} from "../../../Assets/utils/appendScript";
+import {NotificationManager} from "react-notifications";
+import Swal from 'sweetalert2';
+import { useHistory } from "react-router-dom";
 
-const Add_Listing = () => {
+import cloud from '../../../Assets/images/cloud-upload.gif';
+import loading from '../../../Assets/images/loading.gif';
+import loading2 from '../../../Assets/images/loading-9.gif';
+
+// Get Listing context
+
+// Get Partner context
+
+import { getPartnerById } from '../../../Contexts/Partner/services';
+
+//import different parts
+
+import { addListing, addListing_next } from '../../../Contexts/Listing/services';
+
+import Title from "./Listing_Components/Title";
+import Trainers from "./Listing_Components/Trainers";
+import Location_Contact from "./Listing_Components/Location_Contact";
+import Header_Media from "./Listing_Components/Header_Media";
+import Details from "./Listing_Components/Details";
+import Facilities from "./Listing_Components/Facilities";
+import Content_Widgets from "./Listing_Components/Content_Widgets";
+import Working_Hours from "./Listing_Components/Working_Hours";
+import Sidebar_Widget from "./Listing_Components/Sidebar_Widget";
+import Social from "./Listing_Components/Social";
+
+const Add_Listing = (props) => {
+
+    const [state, setState] = useState({"Title":true});
+    const [values, setValues] = useState({});
+    const checkRef = useRef();
+    let history = useHistory();
+    var header_form = document.querySelector("#sec1");
+
+    const [partner, setPartner] = useState({});
+
+    const [error, setError] = useState();
+    const [infos, setInfos] = useState();
 
     useEffect(() => {
-        const appendScripts = () => {
+        if (error) {
+            NotificationManager.error(error.message, error.title);
+        }
+    }, [error, setError]);
+
+    useEffect(() => {
+        if (infos) {
+            NotificationManager.infos(infos.message, infos.title);
+        }
+    }, [infos, setInfos]);
+
+    useEffect(() => {
+        if (props.state.user.uid) {
+            getPartnerById(props.state.user.uid).then(
+                function (partner) {
+                    if (partner.empty) {
+                        setError({ error: true, message: 'please refresh page', title: 'no partner error' });
+                    } else {
+                        setPartner(partner.data());
+                        appendScript("/js/niceSelect.js", false);
+                    }
+                    
+                },
+                function (error) { setError({ error: true, message: 'please refresh page', title: 'no partner error' }) }
+            );
+        }
+
+    }, []);
+
+    function handleChange(newState,section,newValues) {
+        if(newState['Location_Contact'] || newState["All"]){
             appendScript("/js/map-add.js", false);
-        };
-        appendScripts();
-    },[]);
+        }
+        if (!newState["All"]) {
+            header_form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        appendScript("/js/niceSelect.js", false);
+        setState(newState);
+        if(section){
+            console.log(newValues);
+            const updatedValue = {};
+            updatedValue[section] = newValues;
+            setValues({
+                ...values,
+                ...updatedValue
+            });
+        }
+    }
+
+    function handleValidate() {
+
+        setState({ "SEND": true });
+        header_form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+    }
+
+    function handlegoBack() {
+
+        setState({ "All": true })
+        appendScript("/js/map-add.js", false);
+        appendScript("/js/niceSelect.js", false);
+        header_form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        header_form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (checkRef.current.checked) {
+
+            Swal.fire({
+                title: 'Saving Data',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                padding: '3em',
+                background: '#fff url(' + loading2 + ')',
+                backdrop: `
+                rgba(0,0,123,0.4)
+                url(`+ loading + `)
+                left top
+                no-repeat
+                `,
+                onOpen: () => {
+                    Swal.showLoading();
+
+                    addListing(props.state.user.uid, values)
+                        .then(function (docRef) {
+                            addListing_next(docRef, values, props.state.user.uid);
+                    }).catch(function (error) {
+                        Swal.close();
+                        setError({ message: 'Please retry some error occured', title: 'Submitting Error' });
+                    });
+                }
+            }).then(
+                (result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Your listing has been saved',
+                            showConfirmButton: false,
+                            timer: 1500,
+                            onOpen: () => {
+                                history.push("/user#listing");
+                            }
+                        });
+                    }
+                    if (result.isDismissed) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Please retry some problem occured',
+                            showConfirmButton: false,
+                            timer: 2000
+                        });
+                    }
+                }
+            );
+        } else {
+            setError({ message: 'Agree to the terms and conditions before submitting your request', title: '' });
+        }
+
+    }
 
     return (
-        <div className="col-md-9">
-            <div className="dashboard-title   fl-wrap">
-                <h3>Add Listing</h3>
-            </div>
-            {/* profile-edit-container*/} 
-            <div className="profile-edit-container fl-wrap block_box">
-                <div className="custom-form">
-                    <label>Listing Title <i className="fal fa-briefcase"/></label>
-                    <input type="text" placeholder="Name of your business" defaultValue=""/>
-                    <div className="row">
-                        <div className="col-md-6">
-                            <label>Type / Category</label>
-                            <div className="listsearch-input-item">
-                                <select data-placeholder="Apartments" className="chosen-select no-search-select" >
-                                    <option>All Categories</option>
-                                    <option>Shops</option>
-                                    <option>Hotels</option>
-                                    <option>Restaurants</option>
-                                    <option>Fitness</option>
-                                    <option>Events</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-md-6">
-                            <label>Keywords <i className="fal fa-key"/></label>
-                            <input type="text" placeholder="Maximum 15 , should be separated by commas" defaultValue=""/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* profile-edit-container end*/}                                    
-            <div className="dashboard-title  dt-inbox fl-wrap">
-                <h3>Location / Contacts</h3>
-            </div>
-            {/* profile-edit-container*/} 
-            <div className="profile-edit-container fl-wrap block_box">
-                <div className="custom-form">
-                    <div className="row">
-                        <div className="col-md-6">
-                            <label>Longitude (Drag marker on the map)<i className="fal fa-long-arrow-alt-right"/>  </label>
-                            <input type="text" placeholder="Map Longitude"  id="long" defaultValue=""/>                                                
-                        </div>
-                        <div className="col-md-6">
-                            <label>Latitude (Drag marker on the map) <i className="fal fa-long-arrow-alt-down"/> </label>
-                            <input type="text" placeholder="Map Latitude"  id="lat" defaultValue=""/>                                            
-                        </div>
-                    </div>
-                    <div className="map-container">
-                        <div id="singleMap" className="drag-map" data-latitude="4.188601304297962" data-longitude="11.344511451673648"/>
-                        <div className="location-btn geoLocation tolt" data-microtip-position="top-left" data-tooltip="Your location"><span><i className="fal fa-location"/></span></div>
-                    </div>
-                    <label>City / Location</label>
-                    <div className="listsearch-input-item">
-                        <select data-placeholder="City" className="chosen-select no-search-select" >
-                            <option>All Cities</option>
-                            <option>New York</option>
-                            <option>London</option>
-                            <option>Paris</option>
-                            <option>Kiev</option>
-                            <option>Moscow</option>
-                            <option>Dubai</option>
-                            <option>Rome</option>
-                            <option>Beijing</option>
-                        </select>
-                    </div>
-                    <div className="row">
-                        <div className="col-sm-6">
-                            <label>Address<i className="fal fa-map-marker"/></label>
-                            <input type="text" placeholder="Address of your business" defaultValue=""/>                                                
-                        </div>
-                        <div className="col-sm-6">
-                            <label>Email Address<i className="far fa-envelope"/>  </label>
-                            <input type="text" placeholder="JessieManrty@domain.com" defaultValue=""/> 
-                        </div>
-                        <div className="col-sm-6">
-                            <label>Phone<i className="far fa-phone"/>  </label>
-                            <input type="text" placeholder="+7(123)987654" defaultValue=""/>                                                
-                        </div>
-                        <div className="col-sm-6">
-                            <label> Website <i className="far fa-globe"/>  </label>
-                            <input type="text" placeholder="themeforest.net" defaultValue=""/>                                                
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* profile-edit-container end*/}                                     
-            <div className="dashboard-title  dt-inbox fl-wrap">
-                <h3>Header Media</h3>
-            </div>
-            {/* profile-edit-container*/} 
-            <div className="profile-edit-container fl-wrap block_box">
-                <div className="custom-form">
-                    <div className="row">
-                        {/*col */} 
-                        <div className="col-md-4">
-                            <div className="add-list-media-header" style={{marginBottom: '20px'}}>
-                                <label className="radio inline"> 
-                                <input type="radio" name="gender"  defaultChecked />
-                                <span>Background image</span> 
-                                </label>
-                            </div>
-                            <div className="add-list-media-wrap">
-                                <div className="add-list-media-wrap">
-                                    <div className="listsearch-input-item fl-wrap">
-                                        <div className="fuzone">
-                                            <form>
-                                                <div className="fu-text">
-                                                    <span><i className="fal fa-images"/> Click here or drop files to upload</span>
-                                                    <div className="photoUpload-files fl-wrap"/>
-                                                </div>
-                                                <input type="file" className="upload" multiple />
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/*col end*/} 
-                        {/*col */} 
-                        <div className="col-md-4">
-                            <div className="add-list-media-header" style={{ marginBottom: '20px' }}>
-                                <label className="radio inline"> 
-                                <input type="radio" name="gender" />
-                                <span>Carousel</span> 
-                                </label>
-                            </div>
-                            <div className="add-list-media-wrap">
-                                <div className="listsearch-input-item fl-wrap">
-                                    <div className="fuzone">
-                                        <form>
-                                            <div className="fu-text">
-                                                <span><i className="fal fa-images"/> Click here or drop files to upload</span>
-                                                <div className="photoUpload-files fl-wrap"/>
-                                            </div>
-                                            <input type="file" className="upload" multiple />
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {/*col end*/} 
-                        {/*col */} 
-                        <div className="col-md-4">
-                            <div className="add-list-media-header" style={{ marginBottom: '20px' }}>
-                                <label className="radio inline"> 
-                                <input type="radio" name="gender" />
-                                <span>Video</span> 
-                                </label>
-                            </div>
-                            <div className="add-list-media-wrap">
-                                <label>Youtube  <i className="fab fa-youtube"/></label>
-                                <input type="text" placeholder="https://www.youtube.com/" defaultValue=""/>   
-                                <label>Vimeo <i className="fab fa-vimeo-v"/></label>
-                                <input type="text" placeholder="https://vimeo.com/" defaultValue=""/> 
-                            </div>
-                        </div>
-                        {/*col end*/}                                                   
-                    </div>
-                </div>
-            </div>
-            {/* profile-edit-container end*/}                                     
-            <div className="dashboard-title  dt-inbox fl-wrap">
-                <h3>Details</h3>
-            </div>
-            {/* profile-edit-container*/} 
-            <div className="profile-edit-container fl-wrap block_box">
-                <div className="custom-form">
-                    <label>Text</label>
-                    <textarea cols="40" rows="3" placeholder="Datails"/>
-                </div>
-            </div>
+        <div className="col-md-9" id="header_form">
+            {/* profile-edit-container*/}
+            {state["Title"] || state["All"]
+                ?
+                <Title pid={props.state.user.uid} partner={partner} onChange={handleChange} values={values} state={state} />
+                :
+                <></>
+            }
             {/* profile-edit-container end*/}
-            <div className="dashboard-title  dt-inbox fl-wrap">
-                <h3>Facilities</h3>
-            </div>
-            {/* profile-edit-container*/} 
-            <div className="profile-edit-container fl-wrap block_box">
+            {/* profile-edit-container*/}
+            {state["Trainers"] || state["All"]
+                ?
+                <Trainers pid={props.state.user.uid} partner={partner} onChange={handleChange} values={values} state={state} />
+                :
+                <></>
+            }
+            {/* profile-edit-container end*/}
+            {/* profile-edit-container*/}
+            {state["Location_Contact"] || state["All"]
+                ?
+                <Location_Contact onChange={handleChange} partner={partner} phone={props.user.Phone} values={values} state={state} />
+                :
+                <></>
+            }
+            {/* profile-edit-container end*/}
+            {/* profile-edit-container*/}
+            {state["Header_Media"] || state["All"]
+                ?
+                <Header_Media onChange={handleChange} partner={partner} phone={props.user.Phone} values={values} state={state} />
+                :
+                <></>
+            }
+            {/* profile-edit-container end*/}
+            {/* profile-edit-container*/}
+            {state["Details"] || state["All"]
+                ?
+                <Details onChange={handleChange} partner={partner} phone={props.user.Phone} values={values} state={state} />
+                :
+                <></>
+            }
+            {/* profile-edit-container end*/}
+            {/* profile-edit-container*/}
+            {state["Facilities"] || state["All"]
+                ?
+                (
+                    values["Title"].Type !== "House" && values["Title"].Type !== "Restaurant"
+                        ? <></>
+                        :<Facilities onChange={handleChange} partner={partner} phone={props.user.Phone} values={values} state={state} />
+                 )
+                
+                :
+                <></>
+            }
+            {/* profile-edit-container end*/}
+            {/* profile-edit-container*/}
+            {state["Content_Widgets"] || state["All"]
+                ?
+                <Content_Widgets onChange={handleChange} partner={partner} phone={props.user.Phone} values={values} state={state} />
+                :
+                <></>
+            }
+            {/* profile-edit-container end*/}
+            {/* profile-edit-container*/}
+            {state["Working_Hours"] || state["All"]
+                ?
+                <Working_Hours onChange={handleChange} partner={partner} phone={props.user.Phone} values={values} state={state} from="Add-Listing" />
+                :
+                <></>
+            }
+            {/* profile-edit-container end*/}
+            {/* profile-edit-container*/}
+            {state["Sidebar_Widget"] || state["All"]
+                ?
+                <Sidebar_Widget onChange={handleChange} partner={partner} phone={props.user.Phone} values={values} state={state} />
+                :
+                <></>
+            }
+            {/* profile-edit-container end*/}
+            {/* profile-edit-container*/}
+            {state["Social"] || state["All"]
+                ?
+                <Social onChange={handleChange} partner={partner} phone={props.user.Phone} values={values} state={state} />
+                :
+                <></>
+            }
+            {/* profile-edit-container end*/}
+            {state["All"]
+                ?
                 <div className="custom-form">
-                    {/* Checkboxes */}
-                    <ul className="fl-wrap filter-tags no-list-style ds-tg">
-                        <li>
-                            <input id="check-aaa5" type="checkbox" name="check" defaultChecked />
-                            <label form="check-aaa5">Free WiFi</label>
-                        </li>
-                        <li>
-                            <input id="check-bb5" type="checkbox" name="check" defaultChecked />
-                            <label form="check-bb5">Parking</label>
-                        </li>
-                        <li>                                       
-                            <input id="check-dd5" type="checkbox" name="check" />
-                            <label form="check-dd5">Fitness Center</label>
-                        </li>
-                        <li>                                          
-                            <input id="check-cc5" type="checkbox" name="check" />
-                            <label form="check-cc5">Non-smoking Rooms</label>
-                        </li>
-                        <li>                                       
-                            <input id="check-ff5" type="checkbox" name="check" defaultChecked />
-                            <label form="check-ff5">Airport Shuttle</label>
-                        </li>
-                        <li>                                          
-                            <input id="check-c4" type="checkbox" name="check"/>
-                            <label form="check-c4">Air Conditioning</label>
-                        </li>
-                    </ul>
-                    {/* Checkboxes end */}
+                    <button className="btn color2-bg float-btn" onClick={ handleValidate }> Send Listing<i className="fal fa-paper-plane"/></button>
                 </div>
-            </div>
-            {/* profile-edit-container end*/}                                      
-            <div className="dashboard-title  dt-inbox fl-wrap">
-                <h3>Content Widgets</h3>
-            </div>
-            {/* profile-edit-container*/} 
-            <div className="profile-edit-container fl-wrap block_box">
+                :
+                <></>
+            }
+            {state["SEND"]
+                ?
                 <div className="custom-form">
-                    <div className="row">
-                        <div className="col-md-4">
-                            {/* act-widget*/} 
-                            <div className="act-widget fl-wrap">
-                                <div className="act-widget-header">
-                                    <h4>1. Promo video</h4>
-                                    <div className="onoffswitch">
-                                        <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch5" defaultChecked />
-                                        <label className="onoffswitch-label" form="myonoffswitch5">
-                                        <span className="onoffswitch-inner"/>
-                                        <span className="onoffswitch-switch"/>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="add-list-media-wrap">
-                                    <label>Video url :  <i className="fab fa-youtube"/></label>
-                                    <input type="text" placeholder="https://www.youtube.com/" defaultValue=""/>   
-                                </div>
-                            </div>
-                            {/* act-widget end*/}
-                        </div>
-                        <div className="col-md-4">
-                            {/* act-widget*/} 
-                            <div className="act-widget fl-wrap">
-                                <div className="act-widget-header">
-                                    <h4>2. Gallery Thumbnails</h4>
-                                    <div className="onoffswitch">
-                                        <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch6" defaultChecked />
-                                        <label className="onoffswitch-label" form="myonoffswitch6">
-                                        <span className="onoffswitch-inner"/>
-                                        <span className="onoffswitch-switch"/>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="add-list-media-wrap">
-                                    <div className="listsearch-input-item fl-wrap">
-                                        <div className="fuzone">
-                                            <form>
-                                                <div className="fu-text">
-                                                    <span><i className="fal fa-images"/> Click here or drop files to upload</span>
-                                                    <div className="photoUpload-files fl-wrap"/>
-                                                </div>
-                                                <input type="file" className="upload" multiple />
-                                            </form>
+                    <div className="list-single-main-item fl-wrap hidden-section tr-sec">
+                        <div className="profile-edit-container">
+                            <div className="custom-form">
+                                <form onSubmit={handleSubmit}>
+                                    <fieldset className="fl-wrap">
+                                        <div className="list-single-main-item-title fl-wrap">
+                                            <h3>Submit your request</h3>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* act-widget end*/}
-                        </div>
-                        <div className="col-md-4">
-                            {/* act-widget*/} 
-                            <div className="act-widget fl-wrap">
-                                <div className="act-widget-header">
-                                    <h4>3. Slider</h4>
-                                    <div className="onoffswitch">
-                                        <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch7" />
-                                        <label className="onoffswitch-label" form="myonoffswitch7">
-                                        <span className="onoffswitch-inner"/>
-                                        <span className="onoffswitch-switch"/>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div className="add-list-media-wrap">
-                                    <div className="listsearch-input-item fl-wrap">
-                                        <div className="fuzone">
-                                            <form>
-                                                <div className="fu-text">
-                                                    <span><i className="fal fa-images"/> Click here or drop files to upload</span>
-                                                    <div className="photoUpload-files fl-wrap"/>
-                                                </div>
-                                                <input type="file" className="upload" multiple />
-                                            </form>
+                                        <div className="soc-log fl-wrap">
+                                            <p>
+                                                If you have finished, your listing will be subject to verification no later than 24 hours after the date of publication. 
+                                                <br />
+                                                You will be notified by email or phone after validation.
+                                                <br />
+                                                Before submitting your listing please read the terms and conditions if you haven't already done so.
+
+                                            </p>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {/* act-widget end*/}
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* profile-edit-container end*/}                                
-            <div className="dashboard-title  dt-inbox fl-wrap">
-                <h3>Working Hours</h3>
-            </div>
-            {/* profile-edit-container*/} 
-            <div className="profile-edit-container fl-wrap block_box">
-                <div className="custom-form">
-                    <div className="row">
-                        <div className="col-sm-4">
-                            <label>Monday <i className="fal fa-clock"/></label>
-                            <input type="text" placeholder="9 AM - 5 PM" defaultValue=""/>
-                        </div>
-                        <div className="col-sm-4">
-                            <label>Tuesday <i className="fal fa-clock"/></label>
-                            <input type="text" placeholder="9 AM - 5 PM" defaultValue=""/>
-                        </div>
-                        <div className="col-sm-4">
-                            <label>Wednesday <i className="fal fa-clock"/></label>
-                            <input type="text" placeholder="9 AM - 5 PM" defaultValue=""/>
-                        </div>
-                        <div className="col-sm-4">
-                            <label>Thursday <i className="fal fa-clock"/></label>
-                            <input type="text" placeholder="9 AM - 5 PM" defaultValue=""/>
-                        </div>
-                        <div className="col-sm-4">
-                            <label>Friday <i className="fal fa-clock"/></label>
-                            <input type="text" placeholder="9 AM - 5 PM" defaultValue=""/>
-                        </div>
-                        <div className="col-sm-4">
-                            <label>Saturday <i className="fal fa-clock"/></label>
-                            <input type="text" placeholder="9 AM - 3 PM" defaultValue=""/>
-                        </div>
-                        <div className="col-sm-4">
-                            <label>Sunday <i className="fal fa-clock"/></label>
-                            <input type="text" placeholder="Closed" defaultValue=""/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {/* profile-edit-container end*/}                                                                                                       
-            <div className="dashboard-title  dt-inbox fl-wrap">
-                <h3>Sidebar Widgets</h3>
-            </div>
-            {/* profile-edit-container*/} 
-            <div className="profile-edit-container fl-wrap block_box">
-                <div className="custom-form">
-                    {/* act-widget*/} 
-                    <div className="act-widget fl-wrap">
-                        <div className="act-widget-header">
-                            <h4>1. Booking Form</h4>
-                            <div className="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch" defaultChecked />
-                                <label className="onoffswitch-label" form="myonoffswitch">
-                                <span className="onoffswitch-inner"/>
-                                <span className="onoffswitch-switch"/>
-                                </label>
+                                        <div className="filter-tags">
+                                            <input id="check-a" type="checkbox" name="check" ref={checkRef} reauired/>
+                                            <label for="check-a">By continuing, you agree to the<a href="#" target="_blank">Terms and Conditions</a>.</label>
+                                        </div>
+                                            <span className="fw-separator"></span>
+                                            <div className="clearfix"></div>
+                                            <button type="submit" className="next-form action-button color-bg">Confirm Listing<i className="fal fa-submit" /></button>
+                                            <button  onClick={handlegoBack} className="previous-form action-button color-bg">Modify Listing<i className="fal fa-edit" /></button>
+                                    </fieldset>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    {/* act-widget end*/} 
-                    {/* act-widget*/} 
-                    <div className="act-widget fl-wrap">
-                        <div className="act-widget-header">
-                            <h4>2. Price Range </h4>
-                            <div className="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch2" />
-                                <label className="onoffswitch-label" form="myonoffswitch2">
-                                <span className="onoffswitch-inner"/>
-                                <span className="onoffswitch-switch"/>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    {/* act-widget end*/}                                                    
-                    {/* act-widget*/} 
-                    <div className="act-widget fl-wrap">
-                        <div className="act-widget-header">
-                            <h4>3. instagram</h4>
-                            <div className="onoffswitch">
-                                <input type="checkbox" name="onoffswitch" className="onoffswitch-checkbox" id="myonoffswitch3" defaultChecked />
-                                <label className="onoffswitch-label" form="myonoffswitch3">
-                                <span className="onoffswitch-inner"/>
-                                <span className="onoffswitch-switch"/>
-                                </label>
-                            </div>
-                        </div>
-                        <label>Api key<i className="fab fa-mixcloud"/></label>
-                        <input type="text" placeholder="Api key" defaultValue=""/> 
-                    </div>
-                    {/* act-widget end*/} 
                 </div>
-            </div>
-            {/* profile-edit-container end*/}                                   
-            <div className="dashboard-title  dt-inbox fl-wrap">
-                <h3>Your  Socials</h3>
-            </div>
-            {/* profile-edit-container*/} 
-            <div className="profile-edit-container fl-wrap block_box">
-                <div className="custom-form">
-                    <label>Facebook <i className="fab fa-facebook"/></label>
-                    <input type="text" placeholder="https://www.facebook.com/" defaultValue=""/>
-                    <label>Twitter<i className="fab fa-twitter"/>  </label>
-                    <input type="text" placeholder="https://twitter.com/" defaultValue=""/>
-                    <label>Vkontakte<i className="fab fa-vk"/>  </label>
-                    <input type="text" placeholder="https://vk.com" defaultValue=""/>
-                    <label> Instagram <i className="fab fa-instagram"/>  </label>
-                    <input type="text" placeholder="https://www.instagram.com/" defaultValue=""/>
-                    <button className="btn    color2-bg  float-btn">Send Listing<i className="fal fa-paper-plane"/></button>
-                </div>
-            </div>
-            {/* profile-edit-container end*/}                                    
+                :
+                <></>
+            }
         </div>
     );
 };

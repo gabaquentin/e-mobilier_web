@@ -6,15 +6,31 @@ import avatar7 from '../../Assets/images/avatar/7.png';
 import thumbnail1 from '../../Assets/images/gallery/thumbnail/1.png';
 
 import $ from "jquery";
-import app from "../../firebase";
 import {NotificationManager} from "react-notifications";
-import {UserContext} from "../../Contexts/User/userContext";
+import { UserContext } from "../../Contexts/User/userContext";
+
+import { getUserByEmail } from '../../Contexts/User/services';
 
 const  Header = () => {
 
     const [state, dispatch] = useContext(UserContext);
     const [user, setUser] = useState({});
     let history = useHistory();
+
+    const [error, setError] = useState();
+    const [infos, setInfos] = useState();
+
+    useEffect(() => {
+        if (error) {
+            NotificationManager.error(error.message, error.title);
+        }
+    }, [error, setError]);
+
+    useEffect(() => {
+        if (infos) {
+            NotificationManager.infos(infos.message, infos.title);
+        }
+    }, [infos, setInfos]);
 
     useEffect(() => {
         const headerScripts = () => {
@@ -75,24 +91,25 @@ const  Header = () => {
     }, [state]);
 
     useEffect(() => {
-        const fetchUser = async () => {
-            if (state.user.email) {
-                const db = app.firestore();
-                const userRef = db.collection('Users');
-                const snapshot = await userRef.where('Email', '==', state.user.email).get();
-                if (snapshot.empty) {
-                    NotificationManager.error('Verify your connection');
-                    return;
-                }
+        const fetchUser = () => {
+        if (state.user.email) {
+            getUserByEmail(state.user.email).then(
+                function (user) {
+                    if (user.empty) {
+                        setError({ error: true, message: 'please refresh page', title: 'no user error' });
+                    }
 
-                snapshot.forEach(doc => {
-                    setUser(doc.data())
-                });
+                    user.forEach(doc => {
+                        setUser(doc.data());
+                    });
+                },
+                function (error) { fetchUser(); }
+            );
             }
-
         };
-        fetchUser()
-    },[state]);
+        fetchUser();
+        
+    }, [state]);
 
     return (
         <header className={state.active ? 'main-header dsh-header': 'main-header'}>
@@ -196,7 +213,7 @@ const  Header = () => {
                             </select>
                         </div>
                         {/*  header-search-input end  */} 
-                        <button className="header-search-button green-bg" onClick={() => { history.push("/"); }}><i className="far fa-search"/> Search </button>
+                        <button className="header-search-button green-bg" onClick={() => { history.push("/listing"); }}><i className="far fa-search"/> Search </button>
                     </div>
                     <div className="header-search_close color-bg"><i className="fal fa-long-arrow-up"/></div>
                 </div>
@@ -217,7 +234,7 @@ function UserHeader(props) {
 
     return (
         <>
-            {props.user.Role === "CUSTOMER" ? <a onClick={() => { $('.modal , .reg-overlay').fadeIn(200); $(".modal_main").addClass("vis_mr"); $("html, body").addClass("hid-body"); }} style={{ cursor:"pointer" }} className="add-list color-bg">Become Partner <span><i className="fal fa-layer-plus"/></span></a> : ""}
+            {props.user.Role === "CUSTOMER" ? <a onClick={() => { $('.modal , .reg-overlay').fadeIn(200); $(".modal_main").addClass("vis_mr"); $("html, body").addClass("hid-body"); }} style={{ cursor:"pointer" }} className="add-list color-bg">Become Partner <span><i className="fal fa-hands-helping"/></span></a> : ""}
             {props.user.Role === "PARTNER" ? <Link to={"/user#add_listing"} className="add-list color-bg">Add Listing <span><i className="fal fa-layer-plus"/></span></Link> : ""}
 
             <div className="cart-btn show-header-modal" data-microtip-position="bottom" role="tooltip" aria-label="Your Wishlist"><i className="fal fa-heart"/><span className="cart-counter green-bg"/> </div>

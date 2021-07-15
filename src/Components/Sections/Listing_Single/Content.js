@@ -8,9 +8,9 @@ const Content = (props) => {
     return (
         <AuthProvider>
             <Fragment>
-                <Hero/>
-                <Scroll_Nav/>
-                <Container/>
+                <Hero listing={props.listing} author={props.author} user={props.user} openned={props.openned} />
+                <Scroll_Nav listing={props.listing}/>
+                <Container listing={props.listing} author={props.author} user={props.user} openned={props.openned}/>
             </Fragment >
         </AuthProvider>
     );

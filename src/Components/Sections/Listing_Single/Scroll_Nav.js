@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Scroll_Nav = () => {
+const Scroll_Nav = (props) => {
 
     return (
 
@@ -8,12 +8,22 @@ const Scroll_Nav = () => {
             <div className="container">
                 <nav className="scroll-nav scroll-init">
                     <ul className="no-list-style">
-                        <li><a className="act-scrlink" href="#sec1"><i className="fal fa-images"/> Top</a></li>
-                        <li><a href="#sec2"><i className="fal fa-running"/>Trainers </a></li>
-                        <li><a href="#sec3"><i className="fal fa-info"/>Details</a></li>
-                        <li><a href="#sec4"><i className="fal fa-image"/>Gallery</a></li>
-                        <li><a href="#sec5"><i className="fal fa-dumbbell"/>Services</a></li>
-                        <li><a href="#sec6"><i className="fal fa-comments-alt"/>Reviews</a></li>
+                        <li><a className="act-scrlink" href="#sec1"><i className="fal fa-images" /> Top</a></li>
+                        {props.listing.Data.Title.Type === "Fitness" ?
+                            <li><a href="#trainers"><i className="fal fa-running" />Trainers </a></li>
+                            :
+                            ""
+                        }
+                        <li><a href="#details"><i className="fal fa-info" />Details</a></li>
+                        {props.listing.Data.Content_Widgets.Gallery.Display ?
+                            <li><a href="#gallery"><i className="fal fa-image" />Gallery</a></li>
+                            : ""
+                        }
+                        {props.listing.Data.Title.Type === "Service" ?
+                            <li><a href="#services"><i className="fal fa-dumbbell" />Services</a></li>
+                            : ""
+                        }
+                        <li><a href="#reviews"><i className="fal fa-comments-alt"/>Reviews</a></li>
                     </ul>
                 </nav>
                 <div className="scroll-nav-wrapper-opt">

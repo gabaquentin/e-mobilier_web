@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import { AuthProvider } from "../../../Contexts/AuthContext"
 import Hero from './Hero';
 import Sec1 from './Sec1';
