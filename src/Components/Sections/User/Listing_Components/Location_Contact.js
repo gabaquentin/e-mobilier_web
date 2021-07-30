@@ -57,7 +57,12 @@ const Location_Contact = (props) => {
     }
 
     function handlePrevious() {
-        props.onChange({ "Title": true });
+        if (props.values["Title"].Type === "Fitness") {
+            props.onChange({ "Trainers": true });
+        } else {
+            props.onChange({ "Title": true });
+        }
+        
     }
 
     function handleModify() {

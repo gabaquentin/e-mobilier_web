@@ -3,6 +3,9 @@ import $ from "jquery";
 import ImageUploader from 'react-images-upload';
 import "./Styles/trainer_style.css";
 
+
+import { NotificationManager } from "react-notifications";
+
 const Trainers = (props) => {
 
     const [state, setState] = useState([
@@ -10,6 +13,16 @@ const Trainers = (props) => {
     ]);
 
     const [defaultPictures, setDefaultPictures] = useState([]);
+
+    useEffect(() => {
+        const updateTrainers = () => {
+            if (props.values["Trainers"]) {
+                setState(props.values["Trainers"].Trainers);
+                console.log(props.values["Trainers"].Trainers)
+            }
+        };
+        updateTrainers();
+    }, []);
 
     function getUrlFromImage(files, from) {
         let tempDp = [];
@@ -27,12 +40,27 @@ const Trainers = (props) => {
     }
 
     function newTrainer() {
-        state.push({});
+        let valid = 0;
+        for (var i = 0; i < state.length; i++) {
+            if (state[i].trainer && state[i].domain && state[i].description) {
+                valid = 1;
+            } else {
+                valid = 0;
+            }
+        }
+        if (valid === 1) {
+            state.push({});
+            NotificationManager.info('New trainer');
+        } else {
+            NotificationManager.info('Some field is empty');
+        }
         console.log(state);
     }
 
     function removeTrainer(index) {
         state.splice(index, 1);
+        //state.push(state.splice(index, 1)[0]);
+        console.log(index);
         console.log(state);
     }
 
@@ -76,15 +104,15 @@ const Trainers = (props) => {
 
                         {/*col */}
                         {state.map((item, index) => (
-                            <div className="col-md-4" key={index} onChange={(event) => updateTrainer(event,index)}>
+                            <div className="col-md-4" key={index} onChange={(event) => updateTrainer(event, index)}>
                                 <label>Trainer Name <i className="fab fa-facebook" /></label>
-                                <input type="text" placeholder="Trainer Name" name="trainer" defaultValue="" id="trainer" />
+                                <input type="text" placeholder="Trainer Name" name="trainer" defaultValue={item.trainer} id="trainer" />
 
                                 <label>Domain Name <i className="fab fa-facebook" /></label>
-                                <input type="text" placeholder="Domain Name" name="domain" defaultValue="" id="domain" />
+                                <input type="text" placeholder="Domain Name" name="domain" defaultValue={item.domain} id="domain" />
 
                                 <label>Text</label>
-                                <textarea cols="40" rows="3" placeholder="More Details" name="description" />
+                                <textarea cols="40" rows="3" placeholder="More Details" name="description" defaultValue={item.description} />
 
                                 <div className="add-list-media-wrap">
                                     <div className="add-list-media-wrap">
@@ -95,7 +123,7 @@ const Trainers = (props) => {
                                                 withPreview={true}
                                                 label="Max file size: 15mb"
                                                 buttonText='Choose image'
-                                                onChange={(picture) => onDrop(picture,index)}
+                                                onChange={(picture) => onDrop(picture, index)}
                                                 imgExtension={['.jpg', '.gif', '.png', '.gif']}
                                                 maxFileSize={15242880}
                                                 fileSizeError=" file size is too big"
