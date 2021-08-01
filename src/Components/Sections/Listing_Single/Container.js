@@ -7,7 +7,7 @@ import Detail from "./Main/Detail";
 import Facilities from './Main/Facilities';
 import Gallery from "./Main/Gallery";
 import Services from "./Main/Services";
-import Reviews from "./Main/Reviews";
+import Reviews from "./Main/Reviews/Reviews";
 import Menu from "./Main/Menu";
 import Video from "./Main/Video";
 import Rooms from "./Main/Rooms";

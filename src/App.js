@@ -26,6 +26,7 @@ import User from './Components/Pages/User';
 import Listing from "./Components/Pages/Listing";
 import Listing_Single from "./Components/Pages/Listing_Single";
 import Author_Single from "./Components/Pages/Author_Single";
+import Contact from './Components/Pages/Contact';
 
 const  App = () => {
 
@@ -53,6 +54,8 @@ const  App = () => {
                                         <Route exact path="/listing-single/:Id/:Mode" component={Listing_Single} />
                                         <Route exact path="/listing-single/:Id" component={Listing_Single} />
 
+                                        <Route exact path="/contact" component={Contact} />
+                                        
                                         <Route exact path="/author-single" component={Author_Single} />
                                         <PrivateRoute exact path="/user" component={User} />
                                         <Route component={NotFound} />

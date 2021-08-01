@@ -148,6 +148,11 @@ const  Header = () => {
                         <li>
                             <Link to={"/listing"}>Listings</Link>
                         </li>
+
+                        <li>
+                            <Link to={"/contact"}>Contact</Link>
+                        </li>
+
                         <li>
                             <a href="blog.html">News</a>
                         </li>
@@ -256,7 +261,7 @@ function UserHeader(props) {
                 <div className="show-lang"><span><i className="fal fa-globe-europe"/><strong>En</strong></span><i className="fa fa-caret-down arrlan"/></div>
                 <ul className="lang-tooltip lang-action no-list-style">
                     <li><a href="#" className="current-lan" data-lantext="En">English</a></li>
-                    <li><a href="#" data-lantext="Fr">Français</a></li>
+                    <li><a href="#" data-lantext="Fr">Franï¿½ais</a></li>
                 </ul>
             </div>
             {/*  lang-wrap end */}  
@@ -341,7 +346,7 @@ function GuestHeader(props) {
                 <div className="show-lang"><span><i className="fal fa-globe-europe"/><strong>En</strong></span><i className="fa fa-caret-down arrlan"/></div>
                 <ul className="lang-tooltip lang-action no-list-style">
                     <li><a href="#" className="current-lan" data-lantext="En">English</a></li>
-                    <li><a href="#" data-lantext="Fr">Français</a></li>
+                    <li><a href="#" data-lantext="Fr">Franï¿½ais</a></li>
                 </ul>
             </div>
             {/*  lang-wrap end */}  
